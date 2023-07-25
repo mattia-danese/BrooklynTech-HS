@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>AJAX Test</title>
+		<style></style>
+		<script>
+			function initialize()
+			{
+				englishBox = document.getElementById("english");
+				pigLatinBox = document.getElementById("piglatin");
+			}
+			
+			/*
+				makeRequest
+				
+				Make and AJAX request to the server.
+				
+				When sending data using "GET", you have to build a query string into your URL.
+				
+				In order to create the query string, start with the "?" and build your property=value pairs from there.
+			*/
+			function makeRequest(information)
+			{
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "http://localhost:8081/ajaxrequest?estr="+information, true);
+				xhr.onreadystatechange = function()
+				{
+					if (xhr.readyState == 4)
+					{
+						pigLatinBox.innerHTML = xhr.responseText;
+					}
+				}
+				xhr.send(null);
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+		Type your text here:<textarea id = "english"></textarea><br />
+		<button onclick = "makeRequest(englishBox.value);">Translate It!</button>
+		<hr />
+		Your translation is: <div id = "piglatin"></div>
+	</body>
+</html>

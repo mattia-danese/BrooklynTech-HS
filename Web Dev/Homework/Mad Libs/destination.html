@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style></style>
+		<script src = "story.js"></script>
+		<script>
+			function initialize()
+			{
+				wordType = ["noun", "verb", "adjective", "adverb", "verb","verb-ending-in-ing", "verb-past-tense"];
+				output = [];
+				counter = 1;
+				view = document.getElementById("story");
+				
+				x = location.search.split("&");
+				for(var i = 0; i < x.length; i++)
+				{
+					var y = x[i].indexOf("=");
+					var z = x[i].slice(y+1);
+					output.push(z);
+				}
+				alert(output);
+				
+				includeWords(output[0]);
+			}
+			
+			function includeWords(which)
+			{
+				var str = STORIES[which];
+				str = str.split(DELIMITER);
+				for(var i = 0; i < str.length; i++)
+				{
+					for(var a = 0; a < wordType.length; a++)
+					{
+						if(str[i] == wordType[a])
+						{
+							str[i] = output[counter];
+							counter++;
+						}
+					}
+				}
+				str = str.join("");
+				view.innerHTML = str;
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+		<div id = "story"></div>
+	</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style>
+		</style>
+		<script src = "datafile.js"></script>
+		<script>
+			function initialize()
+			{
+				x=[];
+				y=[];
+				z=[];
+				color=[];
+				idx = 0;
+				counter = 0;
+				temp = "";
+				FAKE = 0;
+				REAL = 1;
+				LENGTH = null;
+				getMsg();
+			}
+			function getMsg()
+			{
+				x = CODED_MESSAGES.split(";");
+				LENGTH = x.length;
+				decrypt();
+			}
+			function decrypt ()
+			{
+				for (var idx=0; idx<LENGTH; idx++)
+				{
+					y[idx] = parseInt(x[idx]);
+					if (x[idx].includes("green") || x[idx].includes("Green") == true)
+					{
+						counter++;
+					}
+					if (x[idx].includes("red") || x[idx].includes("Red") == true)
+					{
+						counter++;
+						color[idx] = "red";
+					}
+					if (x[idx].includes("blue") || x[idx].includes("Blue") == true)
+					{
+						counter++;
+						color[idx] = "blue";
+					}
+					if (x[idx].includes("yellow") || x[idx].includes("Yellow") == true)
+					{
+						counter++;
+						color[idx] = "yellow";
+					}
+					if (counter == 1)
+					{
+						z[idx] = REAL;
+					}
+					else
+					{
+						z[idx] = FAKE;
+					}
+					//alert(x[idx]);
+					//alert(y[idx]);
+					//alert(z[idx]);
+					counter = 0;
+				}
+				for (idx=0; idx<LENGTH; idx++)
+				{
+					if (z[idx] == REAL)
+					{
+/*						if (y[idx] <= 9)
+						{
+							temp = x[idx].substring(1);
+						}
+						else
+						{
+							if (y[idx] >=10 && y[idx] <= 99)
+							{
+								temp = x[idx].substring(2);
+							}
+							else
+							{
+								temp = x[idx].substring(3);
+							}
+						}	
+						x[idx] = temp; */
+						x[idx] = x[idx].trim();
+						while (x[idx].indexOf(" ") != undefined)
+						{
+							temp = x[idx].indexOf(" ");
+							x[idx] = x[idx].substring(temp+1);
+							counter++;	
+						}
+						if (color[idx] == "red" && y[idx] != counter+1)
+						{
+							z[idx] = FALSE;
+						}
+						if (color[idx] == "yellow" && y[idx] < counter+1)
+						{
+							z[idx] = FALSE;
+						}
+						if (color[idx] == "blue" && y[idx] > counter+1)
+						{
+							z[idx] = FALSE;
+						}
+					}
+					counter = 0;
+				}
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+	</body>
+</html>

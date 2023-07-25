@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title>Rock Paper Scissor</title>
+		<style>
+			h1
+			{
+				color:blue;
+				text-align:center;
+			}
+			h2
+			{
+				color:red;
+			}
+			h3
+			{
+				color:green;
+			}
+			div
+			{
+				text-align:center;
+			}
+			div img
+			{
+				width:175px;
+			}
+		</style>
+		<script>
+			function initialize()
+			{
+				score = 0;
+				cscore = 0;
+				x = "";
+				y = null;
+				z = null;
+				userChoice = "";
+				compPic = "";
+				compChoice = "";
+				winner = null;
+				say = "";
+				ROCK = 1;
+				PAPER = 2;
+				SCISSOR = 3;
+				scoreOut = document.getElementById("pscore");
+				cscoreOut = document.getElementById("compscore");
+				winnerOut = document.getElementById("status");
+				display();
+			}
+			function display()
+			{
+				scoreOut.innerHTML = score;
+				cscoreOut.innerHTML = cscore;
+				winnerOut.innerHTML = say;
+			}
+			function submit()
+			{
+				compChoose();
+				whoWins();
+				updateScore();
+				display();
+			}
+			function pChoose(modifier)
+			{
+				x = modifier;
+				if (x == "rockimage.jpg")
+				{
+					userChoice=ROCK;
+				}
+				else 
+				{
+					if (x == "paperimage.jpg")
+					{
+						userChoice=PAPER;
+					}
+					else
+					{
+						userChoice=SCISSOR;
+					}
+				}
+			}
+			function compChoose()
+			{
+				y = (Math.random() * 100) + 1;
+				z = Math.round(y);
+				if (z <= 33)
+				{
+					compChoice = ROCK;
+					compPic = "rockimage.jpg";
+				}
+				else 
+				{
+					if(z >= 34 && z <= 66)
+					{
+						compChoice = PAPER;
+						compPic = "paperimage.jpg";
+					}
+					else
+					{
+						compChoice = SCISSOR;
+						compPic = "scissorimage.jpg";
+					}
+				}
+			}
+			function whoWins()
+			{
+				if(userChoice==compChoice)
+				{
+					winner = 0;
+					say = "You Tied!";
+				}
+				else 
+				if((userChoice==ROCK && compChoice==PAPER) || (userChoice==PAPER && compChoice==SCISSOR) || (userChoice==SCISSOR && compChoice==ROCK))
+				{
+					winner = 1;
+					say = "You Lost!";
+				}
+				else 
+				{
+					winner = 2;
+					say = "You Won!";
+				}
+			}
+			function updateScore()
+			{
+				if(winner == 2)
+				{
+					score = score +1;
+				}
+				else 
+				{
+					if (winner == 1)
+					{
+						cscore = cscore + 1;
+					}
+					else
+					{
+						
+					}
+				
+				}
+			}
+			function Reset()
+			{
+				score = 0;
+				cscore = 0;
+				display();
+			}
+			/*function tempDisplay()
+			{
+				alert(x);
+				alert(userChoice);
+				alert(z);
+				alert(compChoice);
+				alert(compPic);
+				alert(winner);
+				<div>
+	<img src = "rockimage.jpg">	
+	</div>
+	<div>
+	<button onclick = "pChoose('paperimage.jpg');">Paper</button>	
+	</div>
+	<div>
+	<img src = "paperimage.jpg">
+	</div>
+	<div>
+	<button onclick = "pChoose('scissorimage.jpg');">Scissors</button>
+	</div>
+	<button onclick = "pChoose('scissorimage.jpg');">Scissors</button>
+	<button onclick = "submit();">Submit</button>
+	<button onclick = "Reset();">Reset Game</button>
+	
+	<img src = "scissorimage.jpg">
+	</div>
+			}*/
+		</script>
+	</head>
+	<body onload = "initialize();">
+	<h1>Rock Paper Scissor</h1>
+	<h3 id = "status"></h3>
+	<h2> Your score:<span id = "pscore"></span></h2>
+	<h2> Computer score:<span id = "compscore"></span></h2>
+	<button onclick = "submit();">Submit</button>
+	<button onclick = "Reset();">Reset Game</button>
+	
+	<div>
+	<button onclick = "pChoose('rockimage.jpg');">Rock</button>
+	</div>
+	<div>
+	<img src = "rockimage.jpg">	
+	</div>
+	
+	<div>
+	<button onclick = "pChoose('paperimage.jpg');">Paper</button>
+	</div>
+	<div>
+	<img src = "paperimage.jpg">
+	</div>
+	
+	<div>
+	<button onclick = "pChoose('scissorimage.jpg');">Scissors</button>
+	</div>
+	<div>
+	<img src = "scissorimage.jpg">
+	</div>
+	
+	</body>
+</html>
+
+<!-- 
+OUTLINE
+1. Establish variables for all 3 images and for the 2 choicess (User + Comp.)
+2. Establish  buttons for rock, paper, scissors (for user selection) and reset button
+3. Make function that connects button click to respective images
+4. Make function so computer randomly selectes one of the 3 options 
+5. Display both chosen images
+6. Display text (You Win, You Lose, Tie)
+7. reset button -> next round button 
+-->

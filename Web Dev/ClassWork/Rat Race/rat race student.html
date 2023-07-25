@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<!--
+	STEP 1
+	Program the Run the button
+	
+	A click of the button will call the runLap function.  Write the runLap function.
+	
+	STEP 2
+	Display the value of each mouse.
+	
+	STEP 3
+	getRandomInteger
+	
+	In order to work through the algorithm, you need to consider the different conditions that might exist.
+	
+	Generating a number from 0 to x is parseInt(Math.random() * (x + 1))
+	What about generating a number from 1 to x?
+	What about generating a number from x to y?
+	What about generating a number from -x to y?
+	
+	Is there a single formula that can cover all of these conditions or do you need to handle them individually?
+
+	STEP 4
+	Using the new random function.
+	
+	Update the runLaps function so that it uses getRandomInteger().
+	
+	STEP 5
+	The race should run for 10 laps.  After 10 laps, we can determine a winner.
+	
+	Create a variable that keeps track of the number of laps and a constant that says which lap is the last one.  
+	
+	Once the number of laps reaches that final number, the race should not continue, even if the player presses the button.
+	
+	Don't forget to display the lap number.
+	
+	STEP 6
+	Formalized Display - Find the Leader
+	
+	Based on the lap number, the program should either say who is in the lead or it should say who won the race.
+	
+	A function should be written to determine which mouse is in the lead.  What parameters does it need?  What should it return?
+	
+	STEP 7
+	Formalized Display - format the lap number.
+	
+	The output should read something like this:
+	
+	After the 6th lap, Mickey is in the lead.
+	
+	The lap number comes from the variable and the lead mouse comes from the function you wrote in Step 6.  What about the suffix for the number ("th")?
+	
+	Write a getNumericSuffix() function that takes a number and determines the proper suffix for it, creating a string with the number and the suffix (like 6th or 1st).  What parameters do you need?  What are the special cases?
+	
+	STEP 8
+	Create the Javascript file.
+	
+	In order to make Javascript code portable, you can create a separate Javascript file with the extension .js.
+	
+	A Javascript file should have ONLY Javascript code in it.
+	
+	Take the getRandomInteger() and getNumericSuffix() functions and place them in a file called utilities.js.  This file is now something that can be imported into any HTML file.  This way, we never have to write these functions again, simply move a copy of the file into our root (or some other place along the path).
+
+	In order to import the file into the HTML file, you use a <script> tag.
+	The <script> tag needs a src attribute (like an <img /> tag) whose value is the file you're importing.
+	The <script> tag must have a closing </script> tag.
+	There may be NO CODE between the opening and closing tags.  If you need additional code, use a separate <script> tag.
+-->
+<html>
+	<head>
+		<title>Rat Race</title>
+		
+		<link rel = "stylesheet" href = "ratrace.css" />
+		
+		<style></style>
+		
+		<script>
+			function initialize()
+			{
+				mickeyOut = document.getElementById("mickeyspan");
+				itchyOut = document.getElementById("itchyspan");
+				jerryOut = document.getElementById("jerryspan");
+				lapOut = document.getElementById("laps");
+				
+				//Variables representing the "distance" of each mouse.
+				mickey = 0;
+				itchy = 0;
+				jerry = 0;
+				x = 0;
+				range = 0;
+				lap = 0;
+				LASTLAP = 10;
+
+				showRats();
+			}
+
+			/*
+				runLap
+				
+				This function will update each mouse's "distance" by a random number between 1 and 10.
+			*/
+			function runLap()
+			{
+				/*mickey = mickey + parseInt((Math.random() *10)+1);
+				itchy = itchy + parseInt((Math.random() *10)+1);
+				jerry = jerry + parseInt((Math.random() *10)+1);*/
+				getRandomInteger(1,10);
+				mickey = mickey + x;
+				getRandomInteger(1,10);
+				itchy = itchy + x;
+				getRandomInteger(1,10);
+				jerry = jerry + x;
+				lap = lap + 1;
+				/*if (lap == LASTLAP)
+				{
+					
+				}*/
+				showRats ();
+				getRandomInteger(1,10);
+				
+			}
+			function tempdisplay()
+			{
+				
+			}
+			
+			/*
+				getRandomInteger
+				
+				Generates a random integer between a lower and an upper bound, inclusive.
+				
+				Parameters
+					lower - the lowest number that could be chosen.
+					upper - the highest number that could be chosen.
+			*/
+			function getRandomInteger(lower, upper)
+			{
+				range = upper - lower;
+				x = parseInt((Math.random()*range)+(2*lower));
+				console.log(x);
+			}
+			
+			/*
+				showRats
+				
+				Handles all of the display for the program, including each mouse's "distance" and any messages that appear on screen.
+			*/
+			function showRats()
+			{
+				mickeyOut.innerHTML = mickey;
+				itchyOut.innerHTML = itchy;
+				jerryOut.innerHTML = jerry;
+				lapOut.innerHTML = lap;
+			}
+		</script>
+	</head>
+		
+	<body onload = "initialize();">
+		<p>
+			Gentlemen, start your mouses.
+		</p>
+		<div>Lap: <span id = "laps"></span></div>
+		<h1>
+			<img src = "images/mickey.png" /><br />
+			Mickey: <span id = "mickeyspan">0</span>
+		</h1>
+		<h2>
+			<img src = "images/itchy.png" /><br />
+			Itchy: <span id = "itchyspan">0</span>
+		</h2>
+		<h3>
+			<img src = "images/jerry.png" /><br />
+			Jerry: <span id = "jerryspan">0</span>
+		</h3>
+		
+		<h3>
+			<button onclick = "runLap();">Run!</button>
+		</h3>
+	</body>
+</html>

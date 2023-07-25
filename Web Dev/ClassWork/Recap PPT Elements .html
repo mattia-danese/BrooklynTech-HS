@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style></style>
+		<script>
+			function initialize()
+			{
+				x=3;
+				clickOutput=document.getElementById("clicktimes");
+				numClicks=0;
+			}
+			function AddClick()
+			{
+				numClicks=numClicks+1;
+				display();
+			}
+			function display()
+			{
+				clickOutput.innerHTML = numClicks;
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+		You have clicked the button <span id = "clicktimes">0</span> times.
+		<button onclick = "AddClick();">
+			Click Me!
+		</button>
+	</body>
+</html>

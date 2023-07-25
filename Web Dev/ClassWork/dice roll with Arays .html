@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style>
+			table 
+			{
+				background-color:yellow;
+				border-style:solid;
+				border-width:thick;
+				text-align:center;
+			}
+			td
+			{
+				color:blue;
+			}
+			th
+			{
+				color:red;
+			}
+		</style>
+		<script>
+			function initialize()
+			{
+				roll = 0;
+				x = 0;
+				dice1 = 0;
+				dice2 = 0;
+				diceT = 0;
+				List1 = [];
+				List2 = [];
+				List3 = [];
+				a = 0;
+				b = 0;
+				c = 0;
+				amsg = document.getElementById("meanA");
+				bmsg = document.getElementById("meanB");
+				cmsg = document.getElementById("meanC");
+				y = 0;
+				
+				numberRoll(1,50);
+			}
+			function numberRoll(lower,upper)
+			{
+				roll = parseInt (Math.random()*(upper-(lower-1))+lower); 
+				while (x <= roll)
+				{
+					addValues();
+					x = x + 1;
+				}
+			}
+			function addValues()
+			{
+				diceValue(1,6);
+				nextRow = myTable.insertRow();
+				nextCell = nextRow.insertCell();
+				nextCell.innerHTML = dice1;
+				List1.push(dice1);
+				nextCell = nextRow.insertCell();
+				nextCell.innerHTML = dice2;
+				List2.push(dice2);
+				nextCell = nextRow.insertCell();
+				nextCell.innerHTML = diceT;
+				List3.push(diceT);
+			}
+			function diceValue (lower, upper)
+			{
+				dice1 = parseInt (Math.random()*(upper-(lower-1))+lower); 
+				dice2 = parseInt (Math.random()*(upper-(lower-1))+lower);
+				diceT = dice1 + dice2;
+			}
+			function mean()
+			{
+				z = List1.length;
+				while (y <= z) //idx = 0; idx < total.length; idx + 1
+				{
+					a = a + List1.pop();
+					b = c + List2.pop();
+					c = c + List3.pop();
+				}
+				a = a/z;
+				b = b/z;
+				c = c/z;
+				display();
+			}
+			function mode()
+			{
+				
+			}
+			function display()
+			{
+				amsg.innerHTML = a;
+				bmsg.innerHTML = b;
+				cmsg.innerHTML = c;
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 	
+		<button onclick = "mean();">
+		Mean 
+		</button>
+		<button onclick = "mode();">
+		Mode 
+		</button>
+		<table id = "myTable">
+			<tr>
+				<th>Die 1</th>
+				<th>Die 2</th>
+				<th>Total Roll</th>
+			</tr>
+		</table>
+		<div>
+			Mean of dice 1 is <span id = "meanA"></span>.
+			Mean of dice 2 is <span id = "meanB"></span>.
+			The total mean is <span id = "meanC"></span>.
+		</div>
+		
+		<div id = "mode"></div>
+	</body>
+</html>

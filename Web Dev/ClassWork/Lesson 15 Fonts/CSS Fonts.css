@@ -1,0 +1,66 @@
+.code, .comment
+{
+	font:bold 12pt courier;
+	width:80%;
+	margin:auto;
+}
+
+.code
+{
+	color:darkblue;
+}
+
+.comment
+{
+	color:darkgreen;
+}
+
+.instructions
+{
+	font:14pt calibri;
+	color: white;
+	background-color:black;
+}
+
+#freenav
+{
+	display:none;
+}
+
+h1
+{
+	text-align:center;
+}
+
+p
+{
+	font-family:comic sans ms;
+}
+
+button
+{
+	margin:2px 2px;
+}
+
+.column
+{
+	text-align:center;
+	border: 12px outset grey;
+	height: 100%;
+}
+
+hr
+{
+	width:90%;
+	margin:25px auto;
+}
+
+#sample
+{
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+	border:thick double black;
+	padding:5px;
+	background-color:lightgrey;
+}

@@ -1,0 +1,27 @@
+body
+{
+	background-color:#ffff9f;
+	text-align:center;
+}
+
+h3
+{
+	font:bold 24pt calibri;
+}
+
+h4
+{
+	font:bold 24pt calibri;
+}
+
+div
+{
+	font:36pt goudy stout;
+	background-color:#C5E17A;
+}
+
+img, span
+{
+	padding:0px 10px;
+	width:13%;
+}

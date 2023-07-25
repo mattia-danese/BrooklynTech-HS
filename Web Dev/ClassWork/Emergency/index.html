@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Emergency!</title>
+		<link rel = "stylesheet" href = "columns.css" />
+		<link rel = "stylesheet" href = "emergency.css" />
+		<style></style>
+		
+		<script src = "utilities.js"></script>
+		<script src = "emergency data.js"></script>
+		<script>
+			/*
+				initialize
+			*/
+			function initialize()
+			{
+				numTrucks = 10;
+				
+				emergencies = [];
+				
+				firetrucksOut = document.getElementById("firetrucks");
+				emergencyEventsOut = document.getElementById("emergencyevents");
+				currentEmergency = null;
+				
+				startTimers();
+			}
+			
+			/*
+				startTimers
+				
+				Starts 2 timers running for the simulation.
+				
+				The first timer generates the emergencies.
+				The second timer checks each emergency for a resolution.
+			*/
+			function startTimers()
+			{
+				//The Emergency Timer creates a new emergency every 5 seconds.
+				emergencyTimer = setInterval(function()
+				{
+					/*
+						Choose a random emergency type and create a new object with the data.
+					*/
+					var idx = getRandomInteger(0,EMERGENCY_TYPES.length - 1);
+					var newEmergency = {type:EMERGENCY_TYPES[idx], icon:EMERGENCY_ICONS[idx], trucksOnScene:0};
+					emergencies.push(newEmergency);
+					
+					/*
+						The output for the emergency is housed in a <div>, but also contains an <img /> and a <span>.  The <img /> and the <span> must be appended to the <div> and the <div> must be appended to emergencyEventsOut.
+						
+						Appending the elements in reverse order (appending the <img /> and the <span> to the <div> before appending the <div> to emergencyEventsOut) puts less of a strain on the the processor because it updates your existing page all at once.
+					*/
+					var el = document.createElement("div");
+					el.style.cursor = "pointer";
+					newEmergency.displayElement = el;
+					
+					var imgEl = document.createElement("img");
+					imgEl.className = "icon";
+					imgEl.src = "images/" + newEmergency.icon;
+					el.appendChild(imgEl);
+
+					var spn = document.createElement("span");
+					spn.innerHTML += newEmergency.type + ": There are " + newEmergency.trucksOnScene + " trucks on the scene.";
+					el.appendChild(spn);
+					
+					/*
+						Clicking on an emergency sets it as the current emergency.
+					*/
+					el.addEventListener("click", function()
+					{
+						/*
+							A try catch block is designed to head off unavoidable errors.  The TRY part tells the browser to try a piece of code.  If that code generates an error, it will CATCH the error and store it as an object (in err).  Depending on what you are doing, you can access the properties of the error object and identify what's happening.
+
+							In this case, there is a possibility that currentEmergency may be set to null.  It will always happen on the first selection and it may happen later as enhancements are made to the program.  This allows a new currentEmergency to be set without crashing the page because of the undefined currentEmergency.
+						*/
+						try
+						{
+							currentEmergency.displayElement.style.backgroundColor = "transparent";
+						} catch (err)
+						{
+						}
+						
+						this.style.backgroundColor = "lightgrey";
+						currentEmergency = newEmergency;
+					});
+					
+					emergencyEventsOut.appendChild(el);
+				}, 5000);
+
+				/*
+					The resolutionTimer checks all of the emergencies in play every second.  If there are trucks on the scene, it will check a random number against the number of trucks divided by 20 (making a 50% chance at most) to determined whether or not the emergency is resolved.
+				*/
+				resolutionTimer = setInterval(function()
+				{
+					for (var i = emergencies.length - 1; i >= 0; i--)
+					{
+						if (emergencies[i].trucksOnScene > 0)
+						{
+							/*
+								If the emergency is resolved:
+									Remove the element from the screen.
+									Return the trucks to the pool.
+									Splice the emergency out of the back end array.
+									Display.
+							*/
+							if (Math.random() < emergencies[i].trucksOnScene / 20)
+							{
+								emergencyEventsOut.removeChild(emergencies[i].displayElement);
+								numTrucks += emergencies[i].trucksOnScene;
+								emergencies.splice(i, 1);
+								display();
+							}
+						}
+					}
+				}, 1000);
+			}
+			
+			/*
+				dispatchTrucks
+				Sends trucks from the pool to the selected emergency.
+				
+				Parameters:
+					trucks - the number of trucks to send.
+			*/
+			function dispatchTrucks(trucks)
+			{
+				if (trucks > numTrucks)
+					trucks = numTrucks;
+					
+				numTrucks -= trucks;
+				currentEmergency.trucksOnScene += trucks;
+				
+				display();
+			}
+
+			/*
+				display
+				Unlike other display functions we've used in the past, this one does not wipe the slate clean and start over every "round".  Instead, it makes sure the number of trucks showing in the pool is updated and it handles the change to an emergency's display when trucks are dispatched to it.
+				
+				The calls to display are strategically positioned so that it is only called when necessary.
+			*/
+			function display()
+			{
+				firetrucksOut.innerHTML = numTrucks;
+				currentEmergency.displayElement.getElementsByTagName("span")[0].innerHTML = currentEmergency.type + ": There are " + currentEmergency.trucksOnScene + " trucks on the scene.";
+			}
+		</script>
+	</head>
+		
+	<body onload = "initialize();">
+		<div class = "columncontainer">
+			<div class = "column">
+				<h2>
+					<span>Emergency!</span><br />
+					<img src = "images/Red.png" />
+				</h2>
+				<div class = "maincontainer">
+					<img src = "images/firetruck.png" /> <span id = "firetrucks">10</span> Trucks <img src = "images/firetruck.png" />
+					<hr />
+					<div>
+						Dispatch<br />
+						<button onclick = "dispatchTrucks(1);">1</button>
+						<button onclick = "dispatchTrucks(2);">2</button>
+						<button onclick = "dispatchTrucks(3);">3</button>
+						<button onclick = "dispatchTrucks(4);">4</button>
+						<button onclick = "dispatchTrucks(5);">5</button><br />
+						<button onclick = "dispatchTrucks(6);">6</button>
+						<button onclick = "dispatchTrucks(7);">7</button>
+						<button onclick = "dispatchTrucks(8);">8</button>
+						<button onclick = "dispatchTrucks(9);">9</button>
+						<button onclick = "dispatchTrucks(10);">10</button><br />
+						trucks
+					</div>
+				</div>
+			</div>
+				
+			<div class = "column columnleft">
+				<h2>Events</h2>
+				<div id = "emergencyevents"></div>
+			</div>
+		</div>
+	</body>
+</html>

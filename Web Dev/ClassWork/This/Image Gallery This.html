@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style>
+			body
+			{
+				text-align:center;
+			}
+			msg 
+			{
+				margin:100px;
+			}
+		</style>
+		<script src = "dragondata.js"></script>
+		<script>
+			function initialize()
+			{
+				mainImage = document.getElementById("big");
+				MSG = document.getElementById("msg");
+				captionOutput = document.getElementById("caption");
+				infoOutput = document.getElementById("info");
+				dragonThumbs = document.getElementsByClassName("thumb");
+				x = dragoninfo.split(";");
+				dragonThumbs[0].dragonName = "Ash";
+				dragonThumbs[0].story = x[1];
+				dragonThumbs[1].dragonName = "Barnabas";
+				dragonThumbs[1].story = x[2];
+				dragonThumbs[2].dragonName = "Drake";
+				dragonThumbs[2].story = x[3];
+				dragonThumbs[3].dragonName = "Endisun";
+				dragonThumbs[3].story = x[4];
+				dragonThumbs[4].dragonName = "Lunar";
+				dragonThumbs[4].story = x[5];
+				dragonThumbs[5].dragonName = "Rax";
+				dragonThumbs[5].story = x[0];
+			}
+			function toggleImage(image)
+			{
+				mainImage.src = image.src;
+				MSG.style.display = "none";
+				captionOutput.innerHTML = image.dragonName;
+				infoOutput.innerHTML = image.story;
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+	<div id = "msg" class = "msg">
+		Click an image to enlarge enlarge it 
+	</div>
+	<img width = 400px id = "big">
+	<div id = "caption"></div>
+	<div id = "info"></div>
+	<hr />
+	<img width = 15% class = "thumb" src = "images/Ash copy.png" onclick = "toggleImage(this);">
+	<img width = 15% class = "thumb" src = "images/Barnabas copy.png" onclick = "toggleImage(this);">
+	<img width = 15% class = "thumb" src = "images/Drake copy.png" onclick = "toggleImage(this);">
+	<img width = 15% class = "thumb" src = "images/Endisun copy.png" onclick = "toggleImage(this);">
+	<img width = 15% class = "thumb" src = "images/Lunar copy.png" onclick = "toggleImage(this);">
+	<img width = 15% class = "thumb" src = "images/Rax copy.png" onclick = "toggleImage(this);">
+	</body>
+</html>

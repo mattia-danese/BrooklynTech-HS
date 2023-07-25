@@ -1,0 +1,716 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		
+		<link rel = "stylesheet" href = "Theme.css" />
+		
+		<style>
+			.info
+			{
+				color: #800000;
+				font-weight: bold;
+			}
+			.advice
+			{
+				display:none;
+			}
+			.nut 
+			{
+				display: none;
+			}
+			.cal
+			{
+				display:none;
+			}
+			.nut1
+			{
+				display:none;
+				font-size:100%;
+			}
+			.columncontainer
+			{
+				margin:auto;
+				text-align:center;
+			}
+			.column	
+			{
+				display:inline-block;
+				width:15%;
+				vertical-align:top;
+				padding:2%;
+			}
+			.despic
+			{
+				display:none;
+			}
+			.error
+			{
+				display:none;
+				color:#8B0000;
+				border:2px solid black;
+				background-color:#B8860B;
+			}
+			img
+			{
+				width:15%;
+			}
+			h2
+			{
+				font-size:200%;
+			}
+			.fruit
+			{
+				font-weight:bold;
+				color:#006400;
+			}
+		</style>
+		<script>
+			function initialize()
+			{
+				frm = document.getElementById("myForm");
+				fwOut = document.getElementById("fw");
+				fl1Out = document.getElementById("fl1");
+				fl2Out = document.getElementById("fl2");
+				fg1Out = document.getElementById("fg1");
+				fg2Out = document.getElementById("fg2");
+				sub = document.getElementById("submit");
+				nutMsg = document.getElementById("nut1");
+				nut = document.getElementById("nut");
+				bnut = document.getElementsByClassName("nut");
+				adv = document.getElementsByClassName("advice");
+				err = document.getElementById("error");
+				finalcal = 0;
+				loss1 = 0;
+				loss2 = 0;
+				gain1 = 0;
+				gain2 = 0;
+				CALORIES = 0;
+				NUTRIENTS = 1;
+			}
+			function selectPath(x)
+			{
+				if (x == 0)
+				{
+					frm.style.display = "block";
+					sub.style.display = "inline";
+					for (var i = 0; i < bnut.length; i++)
+					{
+						bnut[i].style.display = "none";
+					}
+					nutMsg.style.display = "none";
+					var y = document.getElementsByTagName("img");
+					for (i = 0; i <y.length; i++)
+					{
+						y[i].style.display = "none";
+					}
+				}
+				else 
+				{
+					for ( var a = 0; a < bnut.length; a++)
+					{
+						bnut[a].style.display = "block";
+					}
+					for ( a = 0; a <adv.length; a++)
+					{
+						adv[a].style.display = "none";
+					}
+					nut.style.display = "block";
+					frm.style.display = "none";
+					sub.style.display = "none";
+					nutMsg.style.display = "inline";
+					err.style.display = "none";
+				}
+			}
+			function calorieCounter()
+			{
+				err.style.display = "none";
+				if ((frm.gender.value == "") || (frm.weight.value == "") || (frm.height.value == "") || (frm.age.value == "") || (frm.activity.value == ""))
+				{
+					err.style.display = "inline";
+					return;
+				}	
+				if (frm.gender.value == "Male")
+				{
+					var x = ((frm.weight.value * 0.453592) * 10) + (6.25 * (frm.height.value * 2.54)) - (5 * frm.age.value) + 5;
+					if (frm.activity.value == "1")
+					{
+						x = x * 1.2;
+					}
+					if (frm.activity.value == "2")
+					{
+						x = x * 1.375;
+					}
+					if (frm.activity.value == "3")
+					{
+						x = x * 1.55;
+					}
+					if (frm.activity.value == "4")
+					{
+						x = x * 1.7;
+					}
+					if (frm.activity.value == "5")
+					{
+						x = x * 1.9;
+					}
+					x = Math.round(x);
+					finalcal = x;
+				}
+				else
+				{
+					var y = ((frm.weight.value * 0.453592) * 10) + (6.25 * (frm.height.value * 2.54)) - (5 * frm.age.value) - 161;
+					if (frm.activity.value == "1")
+					{
+						y = y * 1.2;
+					}
+					if (frm.activity.value == "2")
+					{
+						y = y * 1.375;
+					}
+					if (frm.activity.value == "3")
+					{
+						y = y * 1.55;
+					}
+					if (frm.activity.value == "4")
+					{
+						y = y * 1.7;
+					}
+					if (frm.activity.value == "5")
+					{
+						y = y * 1.9;
+					}
+					y = Math.round(y);
+					finalcal = y;
+				}
+				loss1 = finalcal - 750;
+				loss2 = finalcal - 500;
+				gain1 = finalcal + 500;
+				gain2 = finalcal + 750;
+				display();
+			}
+			function nutrientSelect(x)
+			{		
+				var y = "";
+				var z = "";
+				var i = null;
+				if (x == "Calcium")
+				{
+					y = document.getElementById(x+1);
+					y.style.display = "inline";
+					y = document.getElementById(x+2);
+					y.style.display = "inline";
+					y = document.getElementById(x+3);
+					y.style.display = "inline";
+					z = document.getElementsByClassName("nutpic2");
+					for  (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic3");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic4");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic5");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic6");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic7");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}	
+				}
+				if (x == "Potassium")
+				{
+					y = document.getElementById(x+1);
+					y.style.display = "inline";
+					y = document.getElementById(x+2);
+					y.style.display = "inline";
+					y = document.getElementById(x+3);
+					y.style.display = "inline";
+					z = document.getElementsByClassName("nutpic1");
+					for  (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic3");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic4");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic5");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic6");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic7");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+				}
+				if (x == "Fiber")
+				{
+					y = document.getElementById(x+1);
+					y.style.display = "inline";
+					y = document.getElementById(x+2);
+					y.style.display = "inline";
+					y = document.getElementById(x+3);
+					y.style.display = "inline";
+					z = document.getElementsByClassName("nutpic1");
+					for  (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic2");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic4");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic5");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic6");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic7");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+				}
+				if (x == "VitaminA")
+				{
+					y = document.getElementById(x+1);
+					y.style.display = "inline";
+					y = document.getElementById(x+2);
+					y.style.display = "inline";
+					y = document.getElementById(x+3);
+					y.style.display = "inline";
+					z = document.getElementsByClassName("nutpic1");
+					for  (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic2");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic3");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic5");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic6");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic7");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+				}
+				if (x == "VitaminC")
+				{
+					y = document.getElementById(x+1);
+					y.style.display = "inline";
+					y = document.getElementById(x+2);
+					y.style.display = "inline";
+					y = document.getElementById(x+3);
+					y.style.display = "inline";
+					z = document.getElementsByClassName("nutpic1");
+					for  (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic2");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic3");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic4");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic6");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic7");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+				}
+				if (x == "VitaminD")
+				{
+					y = document.getElementById(x+1);
+					y.style.display = "inline";
+					y = document.getElementById(x+2);
+					y.style.display = "inline";
+					y = document.getElementById(x+3);
+					y.style.display = "inline";
+					z = document.getElementsByClassName("nutpic1");
+					for  (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic2");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic3");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic4");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic5");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic7");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+				}
+				if (x == "VitaminE")
+				{
+					y = document.getElementById(x+1);
+					y.style.display = "inline";
+					y = document.getElementById(x+2);
+					y.style.display = "inline";
+					y = document.getElementById(x+3);
+					y.style.display = "inline";
+					z = document.getElementsByClassName("nutpic2");
+					for  (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic3");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic4");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic5");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic6");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+					z = document.getElementsByClassName("nutpic1");
+					for (i = 0; i <z.length; i++)
+					{
+						z[i].style.display = "none";
+					}
+				}
+			}
+			function showMSG(id)
+			{
+				var x = document.getElementById(id);
+				x.style.display = "block";
+			}
+			function hideMSG(id)
+			{
+				var x = document.getElementById(id);
+				x.style.display = "none";
+			}
+			function display()
+			{
+				var a = document.getElementsByTagName("div");
+				for (var i = 0; i< a.length; i++)
+				{
+					a[i].style.display = "block";
+				}
+				nutMsg.style.display = "none";
+				fwOut.innerHTML = finalcal;
+				fl1Out.innerHTML = loss1;
+				fl2Out.innerHTML = loss2;
+				fg1Out.innerHTML = gain1;
+				fg2Out.innerHTML = gain2;
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+		<h1>
+			Calisthentics
+		</h1>
+		
+		<hr />
+		
+		<a href = "index.html">Home Page</a>
+		<a href = "index3.html">Exercises</a>
+		
+		<hr />
+		
+		<h2>Dietary Help</h2>
+		<button onclick = "selectPath(CALORIES)">
+		Suggested Calories
+		</button>
+		<button onclick = "selectPath(NUTRIENTS)">
+		Lacking Nutrients?
+		</button>
+		<br />
+		<br />
+		<span id = "error" class = "error"> 
+			Please enter all necessary information
+		</span>
+		<form id = "myForm" class = "cal">
+			<br />
+			What's your age?
+			<br />
+			<input type = "text" name = "age">
+			<br />
+			<br />
+			What's your weight (lbs)?
+			<br />
+			<input type = "text" name = "weight">
+			<br />
+			<br />
+			What's your height (in)?
+			<br />
+			<input type = "text" name = "height">
+			<br />
+			<br />
+			What's your gender?
+			<br />
+			<input type = "radio" name = "gender" value = "Male">Male
+			<input type = "radio" name = "gender" value = "Female">Female
+			<br />
+			<br />
+			What's your daily activity level?
+			<br />
+			<input type = "radio" name = "activity" value = "1">Sedentary
+			<input type = "radio" name = "activity" value = "2">Mid Activity
+			<input type = "radio" name = "activity" value = "3">Moderate Activity
+			<input type = "radio" name = "activity" value = "4">Heavy Activty
+			<input type = "radio" name = "activity" value = "5">Extreme Activity
+			<br />
+			<br />
+		</form>
+		
+		<button id = "submit" onclick = "calorieCounter()" class = "cal">
+			Submit
+		</button>
+		<div class = "advice">
+			<br />
+			In order to maintain your current weight, barring no change in your daily activity level, you should consume <span class = "info" id = "fw"></span> calories per day.
+		</div>
+		<div class = "advice">
+			The suggested rate of weight gain or weight loss is 1-1.5 pounds a week. Based on this, in order to lose weight at this rate, you should consume between <span class = "info" id = "fl1"></span> and <span class = "info" id = "fl2"></span> calories per day.
+		</div>
+		<div class = "advice">
+			In order to gain weight at this rate, you should consume between <span class = "info" id = "fg1"></span> and <span class = "info" id = "fg2"></span> calories per day. Again, this is only if your daily activity level is constant.
+		</div>
+		<br />
+		<div id = "nut1" class = "nut1"> 
+			Are you not getting your daily value of a certain nutrient that you totally should? No probelem! Just select it and we'll suggest foods that are rich in it!
+		</div>
+		<br />
+		<div class = "columncontainer" id = "nut">
+			<span class = "column">
+				<button class = "nut" onclick = "nutrientSelect('Calcium')">
+					Calcium
+				</button>
+			</span>
+			<span class = "column">
+				<button class = "nut" onclick = "nutrientSelect('Potassium')">
+					Potassium
+				</button>
+			</span>
+			<span class = "column">
+				<button class = "nut" onclick = "nutrientSelect('Fiber')">
+					Fiber
+				</button>
+			</span>
+			<span class = "column">
+				<button class = "nut" onclick = "nutrientSelect('VitaminA')">
+					Vitamin A
+				</button>
+			</span>
+			<span class = "column">
+				<button class = "nut" onclick = "nutrientSelect('VitaminC')">
+					Vitamin C
+				</button>
+			</span>
+			<span class = "column">
+				<button class = "nut" onclick = "nutrientSelect('VitaminD')">
+					Vitamin D
+				</button>
+			</span>
+			<span class = "column">
+				<button class = "nut" onclick = "nutrientSelect('VitaminE')">
+					Vitamin E
+				</button>
+			</span>
+		</div>
+		<img src = "nutrientpics/Calcium1.jpeg" class = "nutpic1" id = "Calcium1" onmouseover = "showMSG('cal1')" onmouseout = "hideMSG('cal1')">
+		<img src = "nutrientpics/Calcium2.jpeg" class = "nutpic1" id  = "Calcium2" onmouseover = "showMSG('cal2')" onmouseout = "hideMSG('cal2')">
+		<img src = "nutrientpics/Calcium3.jpeg" class = "nutpic1" id = "Calcium3" onmouseover = "showMSG('cal3')" onmouseout = "hideMSG('cal3')">
+		
+		<img src = "nutrientpics/Potassium1.jpeg" class = "nutpic2" id = "Potassium1" onmouseover = "showMSG('pot1')" onmouseout = "hideMSG('pot1')">
+		<img src = "nutrientpics/Potassium2.jpeg" class = "nutpic2" id = "Potassium2" onmouseover = "showMSG('pot2')" onmouseout = "hideMSG('pot2')">
+		<img src = "nutrientpics/Potassium3.jpeg" class = "nutpic2" id = "Potassium3" onmouseover = "showMSG('pot3')" onmouseout = "hideMSG('pot3')">
+		
+		<img src = "nutrientpics/Fiber1.jpeg" class = "nutpic3" id = "Fiber1" onmouseover = "showMSG('fib1')" onmouseout = "hideMSG('fib1')">
+		<img src = "nutrientpics/Fiber2.jpeg" class = "nutpic3" id = "Fiber2" onmouseover = "showMSG('fib2')" onmouseout = "hideMSG('fib2')">
+		<img src = "nutrientpics/Fiber3.jpeg" class = "nutpic3" id = "Fiber3" onmouseover = "showMSG('fib3')" onmouseout = "hideMSG('fib3')">
+		
+		<img src = "nutrientpics/VitaminA1.jpeg" class = "nutpic4" id = "VitaminA1" onmouseover = "showMSG('A1')" onmouseout = "hideMSG('A1')">
+		<img src = "nutrientpics/VitaminA2.jpeg" class = "nutpic4" id = "VitaminA2" onmouseover = "showMSG('A2')" onmouseout = "hideMSG('A2')">
+		<img src = "nutrientpics/VitaminA3.jpeg" class = "nutpic4" id = "VitaminA3" onmouseover = "showMSG('A3')" onmouseout = "hideMSG('A3')">
+		
+		<img src = "nutrientpics/VitaminC1.jpeg" class = "nutpic5" id = "VitaminC1" onmouseover = "showMSG('C1')" onmouseout = "hideMSG('C1')">
+		<img src = "nutrientpics/VitaminC2.jpeg" class = "nutpic5" id = "VitaminC2" onmouseover = "showMSG('C2')" onmouseout = "hideMSG('C2')">
+		<img src = "nutrientpics/VitaminC3.jpeg" class = "nutpic5" id = "VitaminC3" onmouseover = "showMSG('C3')" onmouseout = "hideMSG('C3')">
+		 
+		<img src = "nutrientpics/VitaminD1.jpeg" class = "nutpic6" id = "VitaminD1" onmouseover = "showMSG('D1')" onmouseout = "hideMSG('D1')">
+		<img src = "nutrientpics/VitaminD2.jpeg" class = "nutpic6" id = "VitaminD2" onmouseover = "showMSG('D2')" onmouseout = "hideMSG('D2')">
+		<img src = "nutrientpics/VitaminD3.jpeg" class = "nutpic6" id = "VitaminD3" onmouseover = "showMSG('D3')" onmouseout = "hideMSG('D3')">
+		
+		<img src = "nutrientpics/VitaminE1.jpeg" class = "nutpic7" id = "VitaminE1" onmouseover = "showMSG('E1')" onmouseout = "hideMSG('E1')">
+		<img src = "nutrientpics/VitaminE2.jpeg" class = "nutpic7" id = "VitaminE2" onmouseover = "showMSG('E2')" onmouseout = "hideMSG('E2')">
+		<img src = "nutrientpics/VitaminE3.jpeg" class = "nutpic7" id = "VitaminE3" onmouseover = "showMSG('E3')" onmouseout = "hideMSG('E3')">
+		
+		<span id = "cal1" class = "despic">
+			<span class = "fruit">Kale:</span> Every 8 ounces has around 180mg of Calcium.
+		</span>
+		<span id = "cal2" class = "despic">
+			<span class = "fruit">Sardines:</span> Every 3 ounces has around 325mg of Calcium.
+		</span>
+		<span id = "cal3" class = "despic">
+			<span class = "fruit">Milk:</span> Every 8 ounces of skim, lowfat, or whole has around 300mg of Calcium.
+		</span>
+		<span id = "pot1" class = "despic">
+			<span class = "fruit">Avocado:</span> A whole one has around 1,067mg of Potassium.
+		</span>
+		<span id = "pot2" class = "despic">
+			<span class = "fruit">Pomegranate:</span> A whole one has around 667mg of Potassium.
+		</span>
+		<span id = "pot3" class = "despic">
+			<span class = "fruit">Banana:</span> A large one has around 487mg of Potassium.
+		</span>
+		<span id = "fib1" class = "despic">
+			<span class = "fruit">Rasberries:</span> One cup has around 8g of Fiber. 
+		</span>
+		<span id = "fib2" class = "despic">
+			<span class = "fruit">Lentils:</span> One cup (boiled) has around 16g of Fiber.
+		</span>
+		<span id = "fib3" class = "despic">
+			<span class = "fruit">Broccoli:</span> One cup (boiled) has around 5g of Fiber.
+		</span>
+		<span id = "A1" class = "despic">
+			<span class = "fruit">Sweet Potato:</span> One cup has around 200g of Vitamin A.
+		</span>
+		<span id = "A2" class = "despic">
+			<span class = "fruit">Carrots:</span> One cup (sliced) has around 156g of Vitamin A.
+		</span>
+		<span id = "A3" class = "despic">
+			<span class = "fruit">Mango:</span> One cup (pieces) ha around 165g of Vitamin A.
+		</span>
+		<span id = "C1" class = "despic">
+			<span class = "fruit">Pineapple:</span> One cup (pieces) has around 79mg of Vitamin C.
+		</span>
+		<span id = "C2" class = "despic">
+			<span class = "fruit">Papaya:</span> A small one has around 95mg of Vitmain C. 
+		</span>
+		<span id = "C3" class = "despic">
+			<span class = "fruit">Kiwi:</span> One has around 64mg of Vitamin C.
+		</span>
+		<span id = "D1" class = "despic">
+			<span class = "fruit">Salmon:</span> One 3.5 ounce serving has between 361 IU and 685 IU of Vitamin D.
+		</span>
+		<span id = "D2" class = "despic">
+			<span class = "fruit">Orange Juice:</span> One cup has around 143 IU of Vitamin D.
+		</span>
+		<span id = "D3" class = "despic">
+			<span class = "fruit"> Oatmeal:</span> One half-cup serving has between 55 IU and 154 IU of Vitamin D.
+		</span>
+		<span id = "E1" class = "despic">
+			<span class = "fruit">Almonds:</span> One ounce has around 7mg of Vitamin E.
+		</span>
+		<span id = "E2" class = "despic">
+			<span class = "fruit">Spinach:</span> One bunch has around 7mg of Vitamin E. 
+		</span>
+		<span id = "E3" class = "despic">
+			<span class = "fruit"> Sunflower Seeds:</span> One tablespoon has around 2mg of Vitamin E.
+		</span>
+		
+	</body>
+</html>
+
+
+
+<!--
+https://www.nof.org/patients/treatment/calciumvitamin-d/a-guide-to-calcium-rich-foods/       done
+https://draxe.com/top-10-potassium-rich-foods/       done
+https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/high-fiber-foods/art-20050948 done 
+https://www.healthaliciousness.com/articles/food-sources-of-vitamin-A.php  done
+https://www.prevention.com/food/9-foods-with-more-vitamin-c-than-an-orange/slide/6 done
+https://www.healthline.com/nutrition/9-foods-high-in-vitamin-d#section9 done
+https://draxe.com/top-10-vitamin-e-rich-foods/   done
+-->
+

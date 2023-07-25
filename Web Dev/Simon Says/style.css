@@ -1,0 +1,30 @@
+html
+{
+    width: 98%;
+    height: 98%;
+}
+
+body
+{
+    text-align: center;
+    height: 100%;
+    border:thin solid blue;
+}
+
+.hide
+{
+    display: none;
+}
+
+#playingField
+{
+    width:50%;
+    height:50%;
+}
+
+#square1, #square2, #square3, #square4
+{
+    width:25%;
+    height:25%;
+    border:thin solid red;
+}

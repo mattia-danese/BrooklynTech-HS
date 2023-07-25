@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>AJAX Test</title>
+		<style></style>
+		<script>
+			/*
+				Making an AJAX request is a process that begins with creating an XMLHttpRequest object.
+				
+				This object is built with properties and functions designed to communicate with a server.
+				
+				The first step is to use the object to open the request:
+				
+					myXHRObject.open(method, URL, isAsynchronous);
+					
+				The open() function creates the request data.  It takes in 3 parameters:
+					method - How will the data be transferred?  Most often, you will use GET or POST, as if submitting a form.
+					URL - Define the request, specifying the address and the name of the request.  Your AJAX request may or may not include a filename, depending on what you're requesting.
+					isAsynchronous - This boolean value determines whether or not you will keep your page active while making the request.  Most of the time, you will put "true" so that the page remains active.
+					
+				After opening the page, you need to set the onreadystatechange event for the request.
+				
+				The readyState property tracks the progress of your request.  The readyState holds one of 5 values.
+				
+							Value	State				Description
+							0		UNSENT				Client has been created. open() not called yet.
+							1		OPENED				open() has been called.
+							2		HEADERS_RECEIVED	send() has been called, and headers and status are available.
+							3		LOADING				Downloading; responseText holds partial data.
+							4		DONE				The operation is complete.
+							
+				As your request moves through its lifecycle, the readyState property changes.  Each change triggers the onreadystatechange event.
+				
+				In order to react to this change, we set the onreadystatechange event for your object to a function.  That way, the function will be called during each change.
+				
+				In the function, you can react to the different values of the readyState as you see fit.  Often, though, we just check to see if the request is complete (readyState has reached 4), and then proceed with whatever it is we want to do on the page.
+				
+				Once everything is prepared, we call the send() function.  This sends the request to the server.  The send() function takes 1 parameter.  This is the POST information.  Set it to null if you're using GET.
+			*/
+			function initialize()
+			{
+				visitorOut = document.getElementById("person");
+				makeRequest();
+			}
+			
+			/*
+				makeRequest
+				
+				Make and AJAX request to the server and write the response to the <span>.
+			*/
+			function makeRequest()
+			{
+				greetRequest = new XMLHttpRequest();
+				greetRequest.open("GET", "http://localhost:8081/getstring", true);
+				greetRequest.onreadystatechange = function()
+				{
+					if (greetRequest.readyState == 4)
+					{
+						visitorOut.innerHTML = greetRequest.responseText;
+					}
+				}
+				greetRequest.send(null);
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+		<div>
+			<span id = "person"></span>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title>Simon Says</title>
+        <style>
+        </style>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+        <script src="script.js"></script>
+        <script></script>
+	</head>
+	<body onload = "initialize();"> 
+        <h1>Simon Says</h1>
+        <button id = "start" onclick = "startFunc()">Start</button>
+        <h2 id = "level" class = "hide">Level:<span id = "count"></span></h2>
+        <div id = "playingField" class = "hide">
+            <div id = "square1"></div>
+            <div id = "square2"></div>
+            <div id = "square3"></div>
+            <div id = "square4"></div>
+        </div>
+        <button id = "goComp" class = "hide" onclick = "compFunc()">Next Level</button>
+        <button id = "clear" class = "hide" onclick = "clearFunc()">Clear</button>
+        <button id = "submit" class = "hide" onclick = "submitFunc()">Submit</button>
+        <div id = "outcome" class = "hide"></div>
+	</body>
+</html>

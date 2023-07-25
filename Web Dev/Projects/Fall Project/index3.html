@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		
+		<link rel = "stylesheet" href = "Theme.css" />
+		<style>
+			.tut
+			{
+				display: none;
+				font-size:larger;
+				color:#8B0000;
+			}
+			.tut1
+			{
+				display: none;
+			}
+			.reset
+			{
+				display:none;
+				width:50px;
+			}	
+			.pic
+			{
+				width:15%;
+			}
+			.exercise
+			{
+				font-weight:bold;
+				color:#4169E1;
+			}
+			.opt
+			{
+				font-size:125%;
+			}
+			h2
+			{
+				font-size:200%;
+			}
+		</style>
+		<script>
+			function initialize()
+			{
+				A = 1;
+				B = 2;
+				C = 3;
+			}
+			function decideLevel(lvl)
+			{
+				if (lvl == A)
+				{
+					var x = document.getElementById("img1");
+					x.style.display = "inline";
+					x = document.getElementById("img2");
+					x.style.display = "inline";
+					x = document.getElementById("img3");
+					x.style.display = "inline";
+					x = document.getElementById("img4");
+					x.style.display = "inline";
+					x = document.getElementById("button1");
+					x.style.display = "none";
+					x = document.getElementById("button2");
+					x.style.display = "none";
+					x = document.getElementById("button3");
+					x.style.display = "none";
+					x = document.getElementById("button4");
+					x.style.display = "inline";
+					x = document.getElementById("resetMSG");
+					x.style.display = "inline";
+					x = document.getElementById("question");
+					x.innerHTML = "You Chose Amateur";
+				}
+				if (lvl == B)
+				{
+					var y = document.getElementById("img5");
+					y.style.display = "inline";
+					y = document.getElementById("img6");
+					y.style.display = "inline";
+					y = document.getElementById("img7");
+					y.style.display = "inline";
+					y = document.getElementById("img8");
+					y.style.display = "inline";
+					y = document.getElementById("button1");
+					y.style.display = "none";
+					y = document.getElementById("button2");
+					y.style.display = "none";
+					y = document.getElementById("button3");
+					y.style.display = "none";
+					y = document.getElementById("button4");
+					y.style.display = "inline";
+					y = document.getElementById("resetMSG");
+					y.style.display = "inline";
+					y = document.getElementById("question");
+					y.innerHTML = "You Chose Advanced";
+				}
+				if (lvl == C)
+				{
+					var z = document.getElementById("img9");
+					z.style.display = "inline";
+					z = document.getElementById("img10");
+					z.style.display = "inline";
+					z = document.getElementById("img11");
+					z.style.display = "inline";
+					z = document.getElementById("img12");
+					z.style.display = "inline";
+					z = document.getElementById("button1");
+					z.style.display = "none";
+					z = document.getElementById("button2");
+					z.style.display = "none";
+					z = document.getElementById("button3");
+					z.style.display = "none";
+					z = document.getElementById("button4");
+					z.style.display = "inline";
+					z = document.getElementById("resetMSG");
+					z.style.display = "inline";
+					z = document.getElementById("question");
+					z.innerHTML = "You Chose Expert";
+				}
+			}
+			function showMSG(id)
+			{
+				var x = document.getElementById(id);
+				x.style.display = "block";
+				x = document.getElementById(id + "D");
+				x.style.display = "block";
+			}
+			function hideMSG(id)
+			{
+				var x = document.getElementById(id);
+				x.style.display = "none";
+				x = document.getElementById(id + "D");
+				x.style.display = "none";
+			}
+			function reset()
+			{
+				var x = document.getElementsByTagName("img");
+				for (var i = 0; i < x.length; i++)
+				{
+					x[i].style.display = "none";
+				}
+				x = document.getElementById("button4");
+				x.style.display = "none";
+				x = document.getElementById("resetMSG");
+				x.style.display = "none";
+				x = document.getElementById("button1");
+				x.style.display = "inline";
+				x = document.getElementById("button2");
+				x.style.display = "inline";
+				x = document.getElementById("button3");
+				x.style.display = "inline";
+				x = document.getElementById("question");
+				x.innerHTML = "Choose Your Level";
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+		<h1>
+			Calisthentics
+		</h1>
+		
+		<hr />
+		
+		<a href = "index.html">Home Page</a>
+		<a href = "index2.html">Dietary Help</a>
+		
+		<hr />
+		
+		<h2>Exercises</h2>
+		<div class = "opt" id = "question">Choose Your Level</div>
+		<button onclick = "decideLevel(1)" id = "button1">
+			Amateur 
+		</button>
+		<button onclick = "decideLevel(2)" id = "button2">
+			Advanced 
+		</button>
+		<button onclick = "decideLevel(3)" id = "button3">
+			Expert 
+		</button>
+		<span id = "resetMSG" class = "reset">Not the right level? Click</span>
+		<button onclick = "reset()" id = "button4" class = "reset">
+			Here
+		</button>
+		<br />
+		<img src = "exercise pics/Amateur/pushup.jpg" id = "img1" class = "pic" onmouseover = "showMSG('tut')" onmouseout = "hideMSG('tut')">
+		<img src = "exercise pics/Amateur/squat.jpeg" id = "img2" class = "pic" onmouseover = "showMSG('tut1')" onmouseout = "hideMSG('tut1')">
+		<img src = "exercise pics/Amateur/planche.jpg" id = "img3" class = "pic" onmouseover = "showMSG('tut2')" onmouseout = "hideMSG('tut2')">
+		<img src = "exercise pics/Amateur/invertedrow.jpeg" id = "img4" class = "pic" onmouseover = "showMSG('tut3')" onmouseout = "hideMSG('tut3')">
+		<img src = "exercise pics/Advanced/dip.jpeg" id = "img5" class = "pic" onmouseover = "showMSG('tut4')" onmouseout = "hideMSG('tut4')">
+		<img src = "exercise pics/Advanced/wallsit.jpg" id = "img6" class = "pic" onmouseover = "showMSG('tut5')" onmouseout = "hideMSG('tut5')">
+		<img src = "exercise pics/Advanced/scissorkick.jpeg" id = "img7" class = "pic" onmouseover = "showMSG('tut6')" onmouseout = "hideMSG('tut6')">
+		<img src = "exercise pics/Advanced/pullup.jpeg" id = "img8" class = "pic" onmouseover = "showMSG('tut7')" onmouseout = "hideMSG('tut7')">
+		<img src = "exercise pics/Expert/muscleup.jpeg" id = "img9" class = "pic" onmouseover = "showMSG('tut8')" onmouseout = "hideMSG('tut8')">
+		<img src = "exercise pics/Expert/pistolsquat.jpeg" id = "img10" class = "pic" onmouseover = "showMSG('tut9')" onmouseout = "hideMSG('tut9')">
+		<img src = "exercise pics/Expert/frontlever.jpg" id = "img11" class = "pic" onmouseover = "showMSG('tut10')" onmouseout = "hideMSG('tut10')">
+		<img src = "exercise pics/Expert/flagpole.jpg" id = "img12" class = "pic" onmouseover = "showMSG('tut11')" onmouseout = "hideMSG('tut11')">
+
+		<div class = "tut" id = "tut">This is a <span class = "exercise">pushup</span></div>
+		<div class = "tut1" id = "tutD">To do a pushup, make sure your hands are under your shoulders and that your back is straight. For the full range of motion, be sure to go down untill your elbow is at a 90 degree angle.</div>
+		
+		<div class = "tut" id = "tut1">This is a <span class = "exercise">squat</span></div>
+		<div class = "tut1" id = "tut1D">To do a squat, make sure your feet are shoulder width apart, your back is straight, and to push through your heels.</div>
+		
+		<div class = "tut" id = "tut2">This is a <span class = "exercise">planche</span></div>
+		<div class = "tut1" id = "tut2D">To do a planche, make sure your back is kept parallel to the floor and your abs are flexed for the entire duration.</div>
+		
+		<div class = "tut" id = "tut3">This is a <span class = "exercise">inverted row</span></div>
+		<div class = "tut1" id = "tut3D">To do an inverted row, go under a bar and pull yourself up so your chest is inline with hands. If it gets too easy, move your feet farther out or elevate them off the ground.</div>
+		
+		<div class = "tut" id = "tut4">This is a <span class = "exercise">dip</span></div>
+		<div class = "tut1" id = "tut4D">To do a dip, support yourself on handle bars and lower your body so your elbow makes a 90 degree angle. Then, push yourself back up.  </div>
+		
+		<div class = "tut" id = "tut5">This is a <span class = "exercise">wallsit</span></div>
+		<div class = "tut1" id = "tut5D">To do a wallsit, imagine you're sitting on an invsible chair. Set your back against a wall, make sure your knees create a 90 degree angle, and hold.</div>
+		
+		<div class = "tut" id = "tut6">This is a <span class = "exercise">scissor kick</span></div>
+		<div class = "tut1" id = "tut6D">To do scissor kicks, lay on your back and place your arms by your sides. Raise your leg as high as you can and bring it back down. Alternate. This shoud be quick movement.</div>
+		
+		<div class = "tut" id = "tut7">This is a <span class = "exercise">pullup</span></div>
+		<div class = "tut1" id = "tut7D">To do a pullup, place your hands shoudler width apart on the pullup bar. Pull yourself up so your chin gets above the bar. Focus on bringing your shoulder blades together.</div>
+		
+		<div class = "tut" id = "tut8">This is a <span class = "exercise">muscle up</span></div>
+		<div class = "tut1" id = "tut8D">To do a muscle up, start by doing a pullup, then switch your grip to that of a dip, and finish by pushing yourself up and doing a dip.</div>
+		
+		<div class = "tut" id = "tut9">This is a <span class = "exercise">pistol squat</span></div>
+		<div class = "tut1" id = "tut9D">To do a pistol squat, balance on one leg and put the other out in front of you. Go down slowly. Your unbalancing leg should straighten as you go down.</div>
+		
+		<div class = "tut" id = "tut10">This is a <span class = "exercise">front lever</span></div>
+		<div class = "tut1" id = "tut10D">To do a front lever, hang on a pullup bar and bring your legs up, together, and lean back. Your body should be parallel with the floor. Flex your abs and hold.</div>
+		
+		<div class = "tut" id = "tut11">This is the <span class = "exercise">flag pole</span></div>
+		<div class = "tut1" id = "tut11D">To do a flag pole, get a good grip on a sturdy poll, hands should be a little farther out than pullup grip. Lift your legs and maintain balance with arms. Tighten core so legs don't fall down.</div>
+		
+		
+	</body>
+</html>

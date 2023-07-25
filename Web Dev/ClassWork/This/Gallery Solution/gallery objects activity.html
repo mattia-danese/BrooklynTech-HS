@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Transition Objects</title>
+		<style>
+			body
+			{
+				text-align:center;
+			}
+			
+			.thumb
+			{
+				width:12%;
+			}
+			
+			#mainimg
+			{
+				width:50%;
+			}
+			
+			#caption
+			{
+				font-size:24pt;
+				font-weight:bold;
+			}
+		</style>
+		
+		<script src = "dragondata.js"></script>
+		<script>
+			function initialize()
+			{
+				//HTML Element objects
+				mainImage = document.getElementById("mainimg");
+				captionOutput = document.getElementById("caption");
+				blurbOutput = document.getElementById("blurb");
+			
+				/*
+					getElementsByClassName returns a list of HTML Elements that all have the specified class name.
+					getElementsByTagName returns a list of HTML Elements that all have the specified tag name.
+					
+					Unlike getElementById, these two functions do not HAVE to be called with the document (although they can be).  These two functions belong to all HTML Elements that have opening and closing tags and, if called with those elements, will search their descendants instead of the whole document.
+					
+					NOTE: These two functions do not return an array.  They return something called a NodeList object.  In many ways, the NodeList behaves like an array, but it is reserved for nodes (HTML Elements, attributes, and text).  For our current purposes, these differences do not come into play and the lists can be treated as arrays.
+				*/
+				var dragonThumbs = document.getElementsByClassName("thumb");
+
+				/*
+					These arrays are built from the string data in the javascript file.
+					
+					The split function breaks up a string into pieces around the specified character or other string (in this case, a semi-colon).  Each of those pieces becomes an item in an array.
+				*/
+				var dragonNames = dragons.split(";");
+				var dragonBlurbs = dragoninfo.split(";");
+				
+				/*
+					This loop iterates through the thumbnail images and the two arrays created with split.  It adds the items from those 2 arrays, as properties, to each of the corresponding thumbnails.
+				*/
+				for (var i = 0; i < dragonThumbs.length; i++)
+				{
+					dragonThumbs[i].dragonName = dragonNames[i];
+					dragonThumbs[i].dragonBlurb = dragonBlurbs[i];
+				}
+			}
+		
+			/*
+				displayData
+				
+				Displays all the data associated with the selected dragon image.
+				
+				Parameters
+					imgElement - the selected image element, which will have all of the data associated with it as properties.
+			*/
+			function displayData(imgElement)
+			{
+				mainImage.src = imgElement.src;
+				captionOutput.innerHTML = imgElement.dragonName;
+				blurbOutput.innerHTML = imgElement.dragonBlurb;
+			}
+		</script>
+	</head>
+		
+	<body onload = "initialize();">
+		<img id = "mainimg" src = "images\rax copy.png"  />
+		<div id = "caption">Rax</div>
+		<div id = "blurb">Rax was a dragon scout who was betrayed by one of his own.  Killed before his time, Rax returned as a skeleton to continue the fight.</div>
+		<hr />
+		<img class = "thumb" onclick = "displayData(this);" src = "images\rax copy.png" />
+		<img class = "thumb" onclick = "displayData(this);" src = "images\ash copy.png" />
+		<img class = "thumb" onclick = "displayData(this);" src = "images\barnabas copy.png" />
+		<img class = "thumb" onclick = "displayData(this);" src = "images\drake copy.png" />
+		<img class = "thumb" onclick = "displayData(this);" src = "images\endisun copy.png" />
+		<img class = "thumb" onclick = "displayData(this);" src = "images\lunar copy.png" />
+	</body>
+</html>

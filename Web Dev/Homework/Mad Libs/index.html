@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style></style>
+		<script src = "utilities.js"></script>
+		<script src = "story.js"></script>
+		<script>
+			function initialize()
+			{
+				form = document.getElementById("frm");
+				storyNum = document.getElementById("inIdx");
+				counter = 0;
+				
+				storyIdx = getRandomInteger(0,2);
+				storyNum.value = storyIdx;
+				story = "";
+				wordType = ["noun", "verb", "adjective", "adverb", "verb","verb-ending-in-ing", "verb-past-tense"];
+				totalWord = [];
+				
+				breakStory(storyIdx);
+			}
+			
+			function breakStory(idx)
+			{
+				story  = STORIES[idx];
+				inputWords(story);
+			}
+			
+			function inputWords(str)
+			{
+				var store = str.split(DELIMITER);
+				for(var i = 0; i < story.length; i++)
+				{
+					for(var a = 0; a < wordType.length; a++)
+					{
+						if(store[i] == wordType[a])
+						{
+							totalWord.push(wordType[a]);
+						}
+					}
+				}
+				
+				makeInput();
+			}
+			
+			function makeInput()
+			{
+				for(var i = 0; i < totalWord.length; i++)
+				{
+					var newElement = document.createElement("input");
+					var newElement2 = document.createElement("span");
+					var newElement3 = document.createElement("br");
+					newElement.type = "text";
+					newElement.name = "word" + counter;
+					counter++;
+					newElement2.innerHTML = totalWord[i] + ":";
+					form.appendChild(newElement2);
+					form.appendChild(newElement);
+					form.appendChild(newElement3);
+				}
+				
+				var newEl = document.createElement("input");
+				newEl.type = "submit";
+				form.appendChild(newEl);
+			}
+
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+		<form method = "get" action = "destination.html" id = "frm">
+			<input type = "hidden" id = "inIdx" name = "which"/>
+		</form>
+	</body>
+</html>

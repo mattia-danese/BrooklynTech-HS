@@ -1,0 +1,576 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		
+		<style>
+			.scores , .roll 
+			{
+				display:none;
+			}
+			body 
+			{
+				background-color:#E0FFFF;
+				text-align:center;
+			}
+			.head1
+			{
+				color:red;
+			}
+			.head2
+			{
+				color: blue;
+			}
+			.redScore , .red
+			{
+				color:red;
+			}
+			.black
+			{
+				font-weight:bold;
+			}
+			.start
+			{
+				border-radius:25px;
+				border:thin solid green;
+				color:#8B008B;
+				background-color:yellow;
+				font-size:50px;
+				margin-top: 10%;
+			}
+			.back
+			{
+				background-color:yellow;
+			}
+			.text
+			{
+				color:#8B008B;
+			}
+			.round
+			{
+				border-radius:25px;
+			}
+			.board
+			{
+				border:thin solid green;
+			}
+		</style>
+		<script>
+			function initialize()
+			{
+				RED = 0;
+				BLACK = 1;
+				numR = null;
+				numB = null;
+				redUser = 10;
+				blackUser = 10;
+				redComp = 10;
+				blackComp = 10;
+				period = null;
+				period1 = null;
+				period2 = null;
+				dots = "";
+				counter = null;
+				CRR = null;
+				CRB = null;
+				winner = null;
+				check1 = null;
+				check2 = null;
+				
+				playB = document.getElementById("playButton");
+				scores = document.getElementById("scoreboard");
+				allOptions = document.getElementById("rules");
+				allOptions.style.display = "none";
+				Rspace = document.getElementById("ruleBreak");
+				Rspace.style.display = "none";
+				space = document.getElementById("playBreak");
+				space.style.display = "none";
+								
+				numRu = document.getElementById("userRedNum");
+				numRu.innerHTML = redUser;
+				numBu = document.getElementById("userBlackNum");
+				numBu.innerHTML = blackUser;
+				numRc = document.getElementById("compRedNum");
+				numRc.innerHTML = redComp;
+				numBc = document.getElementById("compBlackNum");
+				numBc.innerHTML = blackComp;
+				
+				rollR = document.getElementById("rollRed");
+				rollR.style.display = "none";
+				rollB = document.getElementById("rollBlack");
+				rollB.style.display = "none";
+				
+				rMsg = document.getElementById("redMsg");
+				bMsg = document.getElementById("blackMsg");
+				rolledRed = document.getElementById("redRollNum");
+				rolledBlack = document.getElementById("blackRollNum");
+				
+				optionB = document.getElementsByClassName("option");
+				for (var i = 0; i < optionB.length; i++)
+				{
+					optionB[i].style.display = "none";
+				}
+				opt1 = document.getElementById("option1");
+				opt2 = document.getElementById("option2");
+				opt3 = document.getElementById("option3");
+				opt4 = document.getElementById("option4");
+				
+				switchB = document.getElementById("compTurn");
+				switchB.style.display = "none";
+				compMsgR = document.getElementById("computerRollRed");
+				compMsgR.style.display = "none";
+				compMsgB = document.getElementById("computerRollBlack");
+				compMsgB.style.display = "none";
+				waitRed = document.getElementById("periodsRed");
+				waitBlack = document.getElementById("periodsBlack");
+				compRollR = document.getElementById("resultRollCr");
+				compRollR.style.display = "none";
+				compRollB = document.getElementById("resultRollCb");
+				compRollB.style.display = "none";
+				cRR = document.getElementById("displayCompRollRed");
+				cRB = document.getElementById("displayCompRollBlack");
+				compChoice = document.getElementById("compChoose");
+				compChoice.style.display = "none";
+				waitThink = document.getElementById("periodsThink");
+				compOpt = document.getElementById("compChose");
+				compOpt.style.display = "none";
+				recap = document.getElementById("compRecap");
+				recap.style.display = "none";
+				userB = document.getElementById("backToUser");
+				userB.style.display = "none";
+				
+				
+				win = document.getElementById("end1");
+				win.style.display = "none";
+				lost = document.getElementById("end2");
+				lost.style.display = "none";
+				draw = document.getElementById("end3");
+				draw.style.display = "none";
+				restartB = document.getElementById("again");
+				restartB.style.display = "none";
+			}
+			function start()
+			{
+				playB.style.display = "none";
+				scores.style.display = "block";
+				space.style.display = "block";
+				rollR.style.display = "inline";
+				rollB.style.display = "inline";
+				allOptions.style.display = "block";
+				Rspace.style.display = "block";
+			}
+			function getRandomInteger(lower, upper)
+			{
+				return parseInt (Math.random()*(upper-(lower-1))+lower);
+			}
+			function roll(x)
+			{
+				if (x == RED)
+				{
+					rollR.style.display = "none";
+					numR = getRandomInteger(1, 6);
+					rMsg.style.display = "block";
+					rolledRed.innerHTML = numR;
+					check1 = 0;
+				}
+				if (x == BLACK)
+				{
+					rollB.style.display = "none";
+					numB = getRandomInteger(1, 6);
+					bMsg.style.display = "block";
+					rolledBlack.innerHTML = numB;
+					check2 = 0;
+				}
+				if ((check1 != null) && (check2 != null))
+				{
+					/*
+					opt1.innerHTML = "Remove " + numR + " red tokens from your pile and add " + numB + " black tokens to your opponent";
+					opt2.innerHTML = "Add " + numR + " red tokens to your pile and remove " + numB + " black tokens from your opponent";
+					opt3.innerHTML = "Remove " + numB + " black tokens from your pile and add " + numR + " red tokens to your opponent";
+					opt4.innerHTML = "Add " + numB + " black tokens to your pile and remove " + numR + " red tokens from your opponent";
+					*/
+					for (var i = 0; i<optionB.length; i++)
+					{
+						optionB[i].style.display = "inline";
+					}
+					check1 = null;
+					check2 = null;
+				}
+			}
+			function updateScore(x)
+			{
+				opt1.style.display = "none";
+				opt2.style.display = "none";
+				opt3.style.display = "none";
+				opt4.style.display = "none";
+				rMsg.style.display = "none";
+				bMsg.style.display = "none";
+				if (x == 1)
+				{
+					redUser = redUser - numR;
+					blackComp = blackComp + numB;
+				}
+				if (x == 2)
+				{
+					redUser = redUser + numR;
+					blackComp = blackComp - numB;
+				}
+				if (x == 3)
+				{
+					blackUser = blackUser - numB;
+					redComp = redComp + numR;
+				}
+				if (x == 4)
+				{
+					blackUser = blackUser + numB;
+					redComp = redComp - numR;
+				}
+				if(redUser < 0)
+				{
+					redUser = 0;
+				}
+				if(blackUser < 0)
+				{
+					blackUser = 0;
+				}
+				if(redComp < 0)
+				{
+					redComp = 0;
+				}
+				if(blackComp < 0)
+				{
+					blackComp = 0;
+				}
+				display();
+				if((blackUser == 0) || (blackComp == 0))
+					{
+						if(redUser > redComp)
+						{
+							win.style.display = "block";
+							restartB.style.display = "inline";
+							winner = 0;
+						}
+						else
+						{
+							if (redUser == redComp)
+							{
+								draw.style.display = "block";
+								restartB.style.display = "inline";
+								winner = 2;
+							}
+							else		
+							{
+								lost.style.display = "block";
+								restartB.style.display = "inline";
+								winner = 1;
+							}
+						}
+					}
+					else
+					{
+						switchB.style.display = "inline";
+					}	
+			}
+			
+			function display()
+			{
+				numRu.innerHTML = redUser;
+				numBu.innerHTML = blackUser;
+				numRc.innerHTML = redComp;
+				numBc.innerHTML = blackComp;
+			}
+			function periodAddRed()
+			{				
+				if (counter == 7)
+				{
+					clearInterval(period);
+					compMsgR.style.display = "none";
+					compRollR.style.display = "block";
+					var y = getRandomInteger(1, 6);
+					CRR = y;
+					cRR.innerHTML = y;
+					compMsgB.style.display = "block";
+					dots = "";
+					counter = 0;
+					period1 = setInterval(periodAddBlack, 500);
+					
+				}
+				else
+				{
+					dots = dots + "...";
+					waitRed.innerHTML = dots;
+					counter++;
+				}
+			}
+			function periodAddBlack()
+			{
+				if (counter == 7)
+					{
+						clearInterval(period1);
+						compMsgB.style.display = "none";
+						compRollB.style.display = "block";
+						var z = getRandomInteger(1, 6);
+						CRB = z;
+						cRB.innerHTML = z;
+						dots = "";
+						counter = 0;
+						compChoice.style.display = "block";
+						waitBlack.innerHTML = dots;
+						period2 = setInterval(periodAddChoose, 500);
+					}
+					else
+					{
+						dots = dots + "...";
+						waitBlack.innerHTML = dots;
+						counter++;
+					}
+			}
+			function periodAddChoose()
+			{
+				if (counter == 7)
+				{
+					clearInterval(period2);
+					var x = getRandomInteger(1, 4);
+					var y = "";
+					var z = "";
+					compChoice.style.display = "none";
+					compOpt.style.display = "block";
+					recap.style.display = "block";
+					if (x == 1)
+					{
+						y = "The Computer chose Option 1!";
+						z = "The Computer lost " + CRR +" red tokens and you gained " + CRB + " black tokens!";
+						blackUser = blackUser + CRB;
+						redComp = redComp - CRR;
+						recap.innerHTML = z;
+						compOpt.innerHTML = y;
+					}
+					if (x == 2)
+					{
+						y = "The Computer chose Option 2!";
+						z = "The Computer gained " + CRR + " red tokens and you lost " + CRB + " black tokens!";
+						blackUser = blackUser - CRB;
+						redComp = redComp + CRR;
+						recap.innerHTML = z;
+						compOpt.innerHTML = y;
+					}
+					if (x == 3)
+					{
+						y = "The Computer chose Option 3!";
+						z = "The Computer lost " + CRB + " black tokens and you gained " + CRR + " red tokens!";
+						redUser = redUser + CRR;
+						blackComp = blackComp - CRB;
+						recap.innerHTML = z;
+						compOpt.innerHTML = y;
+					}
+					if (x == 4)
+					{
+						y = "The Computer chose Option 4!";
+						z = "The Computer gained " + CRB + " black tokens and you lost " + CRR + " red tokens!";
+						redUser = redUser - CRR;
+						blackComp = blackComp + CRB;
+						recap.innerHTML = z;
+						compOpt.innerHTML = y;
+					}
+					if(redUser < 0)
+					{
+						redUser = 0;
+					}
+					if(blackUser < 0)
+					{
+						blackUser = 0;
+					}
+					if(redComp < 0)
+					{
+						redComp = 0;
+					}
+					if(blackComp < 0)
+					{
+						blackComp = 0;
+					}
+					display();
+					if((blackUser == 0) || (blackComp == 0))
+					{
+						if(redUser > redComp)
+						{
+							win.style.display = "block";
+							restartB.style.display = "inline";
+							winner = 0;
+						}
+						else
+						{
+							if (redUser == redComp)
+							{
+								draw.style.display = "block";
+								restartB.style.display = "inline";
+								winner = 2;
+							}
+							else		
+							{
+								lost.style.display = "block";
+								restartB.style.display = "inline";
+								winner = 1;
+							}
+						}
+					}
+					else
+					{
+						userB.style.display = "inline";
+					}
+				}
+				else
+				{
+					dots = dots + "...";
+					waitThink.innerHTML = dots;
+					counter++;
+				}
+			}
+			function computerGo()
+			{
+				switchB.style.display = "none";
+				compMsgR.style.display = "block";
+				dots = "";
+				waitRed.innerHTML = dots;
+				counter = 0;
+				period = setInterval(periodAddRed, 500);
+			}
+			function userTurn()
+			{
+				userB.style.display = "none";
+				compRollR.style.display = "none";
+				compRollB.style.display = "none";
+				compOpt.style.display = "none";
+				recap.style.display = "none";
+				rollR.style.display = "inline";
+				rollB.style.display = "inline";
+				numR = null;
+				numB = null;
+			}
+			
+			function restart()
+			{
+				redUser = 10;
+				blackUser = 10;
+				redComp = 10;
+				blackComp = 10;
+				restartB.style.display = "none";
+				compRollB.style.display = "none";
+				compRollR.style.display = "none";
+				compOpt.style.display = "none";
+				recap.style.display = "none";
+				rollR.style.display = "inline";
+				rollB.style.display = "inline";
+				if (winner == 0)
+				{
+					win.style.display = "none";
+				}
+				if (winner == 1)
+				{
+					lost.style.display = "none";
+				}
+				if (winner == 2)
+				{
+					draw.style.display = "none";
+				}
+				display();
+			}
+			
+		</script>
+	</head>
+	<body onload = "initialize()">
+		<h1> <span class = "head1">Red</span><span class = "head2"> & </span>Black</h1>
+		
+		<hr />
+		
+		<button onclick = "start()" id = "playButton" class = "start">
+			Play 
+		</button>
+		
+		
+		<span id = "scoreboard" class = "scores">
+			<div>
+				Your <span class = "redScore">Red Tokens:</span> <span id = "userRedNum"></span>
+			</div>
+			<div>
+				Your Black Tokens: <span id = "userBlackNum"></span>
+			</div>
+			<div>
+				Computer <span class = "redScore">Red Tokens:</span><span id = "compRedNum"></span>
+			</div>
+			<div>
+				Computer Black Tokens: <span id = "compBlackNum"></span>
+			</div>
+		</span>
+		
+		<hr id = "playBreak"/>
+		
+		<div id = "rules">
+			<div>Option 1: Remove red tokens from your pile and add black tokens to your opponent</div>
+			<div>Option 2: Add red tokens to your pile and remove black tokens from your opponent</div>
+			<div>Option 3: Remove black tokens from your pile and add red tokens to your opponent</div>
+			<div>Option 4: Add black tokens to your pile and remove red tokens from your opponent</div>
+		</div>
+		
+		<hr id = "ruleBreak"/>
+		
+		<button id = "rollRed" class = "red back round board" onclick = "roll(RED)" >
+			Roll the Red Die
+		</button>
+		<div id = "redMsg" class = "roll">
+			You rolled a <span id = "redRollNum" class = "red"></span> on the red die!
+		</div>
+		<button id = "rollBlack" class = "black back round board" onclick = "roll(BLACK)" ">
+			Roll the Black Die
+		</button>
+		<div id = "blackMsg" class = "roll">
+			You rolled a <span id = "blackRollNum" class = "black"></span> on the black die!
+		</div>
+		
+		
+		<button id = "option1" class = "option back text round board" onclick = "updateScore(1)">Option 1</button>
+		<button id = "option2" class = "option back text round board" onclick = "updateScore(2)">Option 2</button>
+		<button id = "option3" class = "option back text round board" onclick = "updateScore(3)">Option 3</button>
+		<button id = "option4" class = "option back text round board" onclick = "updateScore(4)">Option 4</button>
+		
+		
+		<button id = "compTurn" onclick = "computerGo()" class = "back text round board">
+			Click to start the Computer's turn
+		</button>
+		<div id = "computerRollRed">
+			The Computer is rolling the <span class = "red">red die</span><span id = "periodsRed"></span>
+		</div>
+		<div id = "resultRollCr">
+			The Computer rolled a <span id = "displayCompRollRed" class = "red"></span> on the red die!
+		</div>
+		<div id = "computerRollBlack">
+			The Computer is rolling the <span class = "black">black die</span><span id = "periodsBlack"></span>
+		</div>
+		<div id = "resultRollCb">
+			The Computer rolled a <span id = "displayCompRollBlack" class = "black"></span> on the black die!
+		</div>
+		<div id = "compChoose">
+			The Computer is deciding which option to pick<span id = "periodsThink"></span>
+		</div>
+		<div id = "compChose"></div>
+		<div id = "compRecap"></div>
+		<button id = "backToUser" onclick  = "userTurn()" class = "back text round board">
+			Click to end the Computer's Turn
+		</button>
+		
+		
+		<h2 id = "end1">
+			You Won!
+		</h2>
+		<h2 id = "end2">
+			The Computer Won!
+		</h2>
+		<h2 id = "end3">
+			It's a draw!
+		</h2>
+		<button id = "again" onclick = "restart();" class = "start">
+			Play Again
+		</button>
+	</body>
+</html>
+

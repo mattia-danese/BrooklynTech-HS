@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title></title>
+		<style></style>
+		<script>
+			function initialize()
+			{
+				toggle=false;
+				toggleMsgOut=d.gid("tmsg"); //Commmunicator between Script and HTML
+				toggleMsg="The toggle is off";
+			}
+			
+			function display()
+			{
+				toggleMsgOut.innerHTML=toggleMsg;
+			}
+			
+			function switchToggle()
+			{
+				if(toggle==false) //!=not
+				{
+					toggle=true;
+					toggleMsg="The toggle is on";
+					display(); 
+				}
+				else
+				{	
+					toggle=false;
+					toggleMsg="The toggle is off";
+					display();
+				} 
+				//toggle=!toggle
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+		<div id="tmsg">
+			The toggle is off
+		</div>
+		<button onclick = "switchToggle();">
+			Switch Toggle
+		</button>
+	</body>
+</html>
+

@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title>
+			21 Card Game
+		</title>
+		<link rel = "stylesheet" type = "text/css" href = "columns.css">
+		<style>
+			h1
+			{
+				color:#ADFF2F;
+				/*
+				 #00FFFF
+				 */
+				font-size:80px;
+				display:inline-block;
+				margin-top:0px;
+				margin-bottom:0px;
+			}
+			.link
+			{
+				border: thin solid blue;
+				background-color: #90EE90;
+				text-decoration:none;
+				font-size:200%;
+				padding: 5px;
+			}
+			.column
+			{
+				margin-top: 20%;
+			}
+			a:hover
+			{
+				font-size:225%;
+			}
+			.credits
+			{
+				color:white;
+				display:inline-block;
+				position:absolute;
+				top:90%;
+				left:15%;;
+			}
+			.back
+			{
+				position:absolute;
+				width:100%;
+				height:100%;
+				z-index:-1;
+				top:0px;
+				left:0px;
+			}
+			.columncontainer
+			{
+				display:none;
+			}
+			.bunch
+			{
+				display:inline-block;
+			}
+			.first
+			{
+				text-align:center;
+				display:block;
+				font-size:135%;
+				margin-top:0.5%;
+			}
+			#warn
+			{
+				color:orange;
+			}
+			#button
+			{
+				color:red;
+				border-radius:20px;
+				margin-top:2%;
+			}
+			
+			.pic
+			{
+				display:none;
+			}
+			
+			#pic1
+			{
+				margin-left:5%;
+			}
+			
+			#pic2
+			{
+				margin-left:28%;
+			}
+			
+			a:visited
+			{
+				color:blue;
+			}
+			
+		</style>
+		<script>
+			function initialize()
+			{
+				x = document.getElementById("choice");
+				y = document.getElementById("warn");
+				z = document.getElementById("button");
+				a = document.getElementById("pic1");
+				b = document.getElementById("pic2");
+				fis = document.getElementsByClassName("first");
+				all = document.URL;
+				
+				if(all.includes("?"))
+				{
+						z.style.display = "none";
+						y.innerHTML = "Let's Begin! Choose what you want to do";
+						x.style.display = "block";
+						check = 0;
+				}
+			}
+			function start()
+			{
+					x.style.display = "block";
+					y.innerHTML = "Let's Begin! Choose what you want to do";
+					z.style.display = "none";
+			}
+			
+			function showPic(id)
+			{
+				var w = document.getElementById(id);
+				w.style.display = "block";
+			}
+			function hidePic(id)
+			{
+				var w = document.getElementById(id);
+				w.style.display = "none";
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+		<img src = "background.jpg" class = "back">
+		<div class = "bunch">
+			<h1>
+				21: The Card Game
+			</h1>
+			<div class = "first">
+				<div id = "warn">
+					Please acknowledge that we are not liable for any doings induced by rage
+				</div>
+				<button id = "button" onclick = "start();">
+					I Agree
+				</button>
+			</div>
+			<div class = "columncontainer" id = "choice">
+				<div class = "column">
+					<a href = "index2.html" class = "link" onmouseover = "showPic('pic1');" onmouseout = "hidePic('pic1');"> Learn To Play </a>
+				</div>
+				<div class = "column">
+					<a href = "index3.html" class = "link" onmouseover = "showPic('pic2');" onmouseout = "hidePic('pic2');"> Play The Game</a>
+				</div>
+			</div>
+			<img src = "study.gif" class = "pic" id = "pic1">
+			<img src = "play.gif" class = "pic" id = "pic2">
+		</div>
+		
+		<div class = "credits">
+			Founded by Mattia, Parker, and Philip
+		</div>
+	</body>
+</html>

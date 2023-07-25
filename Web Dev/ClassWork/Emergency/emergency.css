@@ -1,0 +1,71 @@
+h2
+{
+	width:90%;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.maincontainer
+{
+	width:90%;
+	text-align:center;
+	margin:auto;
+	border:thin solid black;
+	border-radius:10px;
+	background-color:lightgrey;
+	padding:5px 0px;
+}
+
+.columncontainer
+{
+}
+
+.column
+{
+	width:30%;
+}
+
+.columnleft
+{
+	width:60%;
+}
+
+.icon
+{
+	padding:0px 12px;
+}
+
+body
+{
+	font:bold 24pt calibri;
+	background-color:#ffebcc;
+}
+
+button
+{
+	font:bold 24pt calibri;
+}
+
+h2
+{
+	font:36pt broadway;
+	color:#8B0000;
+	background-color:darkgrey;
+	border-radius:20px;
+}
+
+h2 img
+{
+	width:80%;
+}
+
+div#emergencyevents img
+{
+	height:40px;
+}
+
+img[src = "images/firetruck.png"]
+{
+	width:20%;
+}

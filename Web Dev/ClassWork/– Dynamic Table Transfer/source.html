@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style>
+			.space
+			{
+				margin-top:2%;
+				margin-bottom:2%;
+			}
+		</style>
+		<script>
+			function initialize()
+			{
+				form = document.getElementById("fr");
+				addNum = document.getElementById("adder");
+				sumBut = document.getElementById("sum");
+				x = 1;
+			}
+			function addBox()
+			{
+				form.removeChild(sumBut);
+				var lilB = document.createElement("br");
+				var y = addNum.value;
+				alert(y);
+				var z = 0;
+				while (z < y)
+				{
+					var newElement1 = document.createElement("input");
+					var newElement2 = document.createElement("input");
+					var newElement3 = document.createElement("input");
+					var newElement4 = document.createElement("input");
+					var newText1 = document.createElement("span");
+					var newText2 = document.createElement("span");
+					var newText3 = document.createElement("span");
+					var newText4 = document.createElement("span");
+					var breaker = document.createElement("hr");
+					breaker.setAttribute("class", "space");
+					form.appendChild(breaker);
+					
+					newText1.innerHTML = "Song:";
+					form.appendChild(newText1);
+					
+					newElement1.name = "song" + x;
+					newElement1.type = "text";
+					form.appendChild(newElement1);
+					
+					newText2.innerHTML = "Album:";
+					form.appendChild(newText2);
+					
+					newElement2.name = "album" + x;
+					newElement2.type = "text";
+					form.appendChild(newElement2);
+					
+					newText3.innerHTML = "Artist:";
+					form.appendChild(newText3);
+					
+					newElement3.name = "artist" + x;
+					newElement3.type = "text";
+					form.appendChild(newElement3);
+					
+					newText4.innerHTML = "Year Released:";
+					form.appendChild(newText4);
+					
+					newElement4.name = "year" + x;
+					newElement4.type = "text";
+					form.appendChild(newElement4);
+					z++;
+				}
+				form.appendChild(lilB);
+				form.appendChild(sumBut);
+				x++;
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+		<form id = "fr" method = "get" action = "destination.html">
+			Song:<input type = "text" name = "song"/>
+			Album:<input type = "text" name = "album"/>
+			Artist:<input type = "text" name = "artist"/>
+			Year Released:<input type = "text" name = "year"/>
+			<br />
+			<input type = "submit" id = "sum" class = "space"/>
+		</form>
+		<hr />
+		Number Of Additional Boxes:<input type = "text" name = "add" id = "adder">
+		<button onclick = "addBox();">
+			Add Them!
+		</button>
+	</body>
+</html>

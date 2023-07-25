@@ -1,0 +1,465 @@
+<!-- Parker Ahmed -->
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Twenty One</title>
+		<link rel = "stylesheet" type = "text/css" href = "columns.css">
+		<style>
+		.back
+			{
+				position:absolute;
+				width:100%;
+				height:100%;
+				z-index:-1;
+				top:0px;
+				left:0px;
+			}
+			.bunch
+			{
+				width:45%;
+			}
+			h1
+			{
+				color:pink;
+				text-align:center;
+			}
+			#oppCardDraw , #pCardDraw
+			{
+				display:inline;
+			}
+			h4 , #oppScore , #pScore , #stat
+			{
+				color:white;
+			}
+			#pScore , #oppScore , #stat
+			{
+				height:20px;
+			}
+			.link
+			{
+				border: thin solid blue;
+				background-color: #90EE90;
+				text-decoration:none;
+				font-size:200%;
+				padding: 5px;
+			}
+			.columncontainer 
+			{
+				width:100%;
+				display:inline-block;
+				text-align:left;
+				
+			}
+			.column1
+			{
+				display:inline-block;
+				width:20%;
+				vertical-align:top;
+				padding:2%;
+				text-align:center;
+			}
+			.con2
+			{
+				text-align:center;
+			}
+			#links
+			{
+				margin-top:18%;
+			}
+			a:visited
+			{
+				color:blue;
+			}
+			a:hover
+			{
+				font-size:225%;
+			}
+			.but
+			{
+				display:block;
+				color:pink;
+				border-radius:20px;
+			}
+			.green
+			{
+				background-color:green;
+			}
+			.black
+			{
+				background-color:black;
+			}
+		</style>
+		<script src = "utilities.js"></script>
+		<script>
+			function initialize()
+			{
+				oppCard1Output = document.getElementById("opp1");
+				oppCard2Output = document.getElementById("opp2");
+				playerCard1Output = document.getElementById("p1");
+				playerCard2Output = document.getElementById("p2");
+				playerScoreOutput = document.getElementById("pScore");
+				oppScoreOutput = document.getElementById("oppScore");
+				playerHandOutput = document.getElementById("pHand");
+				oppHandOutput = document.getElementById("oppHand");
+				gameStatusOutput = document.getElementById("stat");
+				pCardsDrawn = document.getElementById("pCardDraw");
+				oppCardsDrawn = document.getElementById("oppCardDraw");
+				startBtn = document.getElementById("start");
+				hitBtn = document.getElementById("hit");
+				standBtn = document.getElementById("stand");
+				resetBtn = document.getElementById("reset");
+				gameStatus = "";
+				pCardsDrawn.innerHTML = "";
+				oppCardsDrawn.innerHTML = "";
+				playerHand = [];
+				oppHand =[];
+				playerScore = 0;
+				opponentScore = 0;
+				gameOver = false;
+				refresh = false;
+				endGame = false;
+				pAce = false;
+				oppAce = false;
+				gameStart = false;
+				oppCard1 = null;
+				oppcard2 = null;
+				playerCard1 = null;
+				playerCard2 = null;
+				
+				genCardDeck();
+			}
+			
+			function genCardDeck()
+			{
+				deck = [];
+				suits = ["spades", "clubs", "hearts", "diamonds"];
+				kind = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"];
+				imgIdx = 0;
+							
+				for (var i = 0; i < suits.length; i++)
+				{
+					for (var x = 0; x < kind.length; x++)
+					{
+						card = {};
+						card.suit = suits[i];
+						card.kind = kind[x];
+						
+						if (card.kind == "Ace")
+						{
+							card.value = 11;
+						}
+						else
+						{
+							if (card.kind == "Jack" || card.kind == "Queen" || card.kind == "King")
+							{
+								card.value = 10;
+							}
+							else
+							{
+								card.value = parseInt(kind[x]);
+							}
+						}
+						card.img = imgIdx + ".png";
+									
+						deck.push(card);
+						imgIdx++;
+					}
+				}
+			}
+
+			function drawCards ()
+			{
+				gameStart = true;
+				oppCard1 = deck[getRandomInteger(0, deck.length - 1)];
+				deck.splice(oppCard1,1);
+				
+				oppCard2 = deck[getRandomInteger(0, deck.length - 1)];
+				deck.splice(oppCard2,1);
+
+				playerCard1 = deck[getRandomInteger(0, deck.length - 1)];
+				deck.splice(playerCard1,1);
+			
+				playerCard2 = deck[getRandomInteger(0, deck.length - 1)];
+				deck.splice(playerCard2,1);
+				
+				oppHand.push(oppCard1, oppCard2);
+				playerHand.push(playerCard1, playerCard2);
+				
+				
+				
+				
+				updateScore();
+				checkScore();
+				display();
+			}
+			
+			function display()
+			{
+				oppCard1Output.src = 'cardimages/' + oppCard1.img;
+				playerCard1Output.src = 'cardimages/' + playerCard1.img;
+				playerCard2Output.src = 'cardimages/' + playerCard2.img;
+				
+				playerScoreOutput.innerHTML = playerScore;
+				
+				if (gameStart == true)
+				{
+					startBtn.disabled = true;
+					startBtn.style.backgroundColor = "black";
+					hitBtn.disabled = false;
+					hitBtn.style.backgroundColor = "green";
+					standBtn.disabled = false;
+					standBtn.style.backgroundColor = "green";
+					resetBtn.disabled = false;
+					resetBtn.style.backgroundColor = "green";
+				}
+				
+				if (gameStart == false)
+				{
+					startBtn.disabled = false;
+					startBtn.style.backgroundColor = "green";
+					hitBtn.disabled = true;
+					hitBtn.style.backgroundColor = "black";
+					standBtn.disabled = true;
+					standBtn.style.backgroundColor = "black";
+					resetBtn.disabled = true;
+					resetBtn.style.backgroundColor = "black";
+				}
+				
+				if (endGame == true)
+				{
+					oppCard2Output.src = 'cardimages/' + oppCard2.img;
+					gameStatusOutput.innerHTML = gameStatus;
+					oppScoreOutput.innerHTML = oppScore;
+					
+					startBtn.disabled = true;
+					startBtn.style.backgroundColor = "black";
+					hitBtn.disabled = true;
+					hitBtn.style.backgroundColor = "black";
+					standBtn.disabled = true;
+					standBtn.style.backgroundColor = "black";
+					resetBtn.disabled = false;
+					resetBtn.style.backgroundColor = "green";
+				}
+					
+				if (refresh == true)
+				{
+					oppCard1Output.src = "cardimages/back-red-75-1.png";
+					oppCard2Output.src = "cardimages/back-red-75-1.png";
+					playerCard1Output.src = "cardimages/back-blue-75-1.png";
+					playerCard2Output.src = "cardimages/back-blue-75-1.png";
+					
+					oppScoreOutput.innerHTML = "";
+					playerScoreOutput.innerHTML = "";
+					gameStatusOutput.innerHTML = "";
+				}
+			}
+			
+			function hitMove()
+			{
+				var cardDrawn = deck[getRandomInteger(0, deck.length - 1)];
+				deck.splice(cardDrawn,1);
+				
+				playerHand.push(cardDrawn);
+				
+				var newCardImg = document.createElement("IMG");
+				newCardImg.src = 'cardimages/' + cardDrawn.img;
+				pCardsDrawn.appendChild(newCardImg);
+				
+				updateScore();
+				checkScore();
+			}
+			
+			function updateScore()
+			{
+				playerScore = 0;
+				oppScore = 0;
+				for (var i = 0; i < playerHand.length; i++)
+				{
+					playerScore = playerHand[i].value + playerScore;
+				}
+				
+				for (var x = 0; x < oppHand.length; x++)
+				{
+					oppScore = oppHand[x].value + oppScore;
+				}
+			}
+			
+			function checkScore()
+			{
+				for (var i = 0; i < playerHand.length; i++)
+				{
+					if (playerHand[i].kind == "Ace")
+					{
+						pAce = true;
+						pAceIdx = i;
+					}
+				}
+				
+				for (var x = 0; x < oppHand.length; x++)
+				{
+					if (oppHand[x].kind == "Ace")
+					{
+						oppAce = true;
+						oppAceIdx = x;
+					}
+				}
+				
+				if (oppScore > 21 && oppAce == true)
+				{
+					oppHand[oppAceIdx].value = 1;
+					updateScore();
+				}
+				
+				if (playerScore > 21 && pAce == true)
+				{
+					playerHand[pAceIdx].value = 1;
+					updateScore();
+				}
+				
+				if (playerScore > 21)
+				{
+					endGame = true;
+					gameStatus = "You Busted!";
+				}
+				else if (playerScore == 21)
+				{
+					endGame = true;
+					gameStatus = "You Win with 21!";
+				}
+				else if (oppScore == 21)
+				{
+					endGame = true;
+					gameStatus = "You Lose, Opponent has 21!";
+				}
+				else if (oppScore > 21)
+				{
+					gameStatus = "You Won!";
+				}
+				else if (endGame == true)
+				{
+					if (playerScore > oppScore)
+					{
+						gameStatus = "You Won!";
+					}
+					
+					if (playerScore < oppScore)
+					{
+						gameStatus = "You Lost!";
+					}
+					
+					if (playerScore == oppScore)
+					{
+						gameStatus = "It's a draw!";
+					}
+				}
+				display();
+			}
+			
+			function standMove()
+			{
+				endGame = true;
+				computerTurn();
+			}
+			
+			function computerTurn()
+			{
+				while (oppScore < 17)
+				{
+					var cardDrawn = deck[getRandomInteger(0, deck.length - 1)];
+					deck.splice(cardDrawn,1);
+					
+					oppHand.push(cardDrawn);
+					
+					var newCardImg = document.createElement("IMG");
+					newCardImg.src = 'cardimages/' + cardDrawn.img;
+					oppCardsDrawn.appendChild(newCardImg);
+					
+					updateScore();
+				}
+				
+					checkScore();
+			}
+			
+			function reset()
+			{
+				initialize();
+				refresh = true;
+				
+				var blankOppCard = {};
+				blankOppCard.img = "back-red-75-1.png";
+				blankOppCard.value = 0;
+				oppCard1 = blankOppCard;
+				oppCard2 = blankOppCard;
+				
+				var blankPlayerCard = {};
+				blankPlayerCard.img = "back-blue-75-1.png";
+				blankPlayerCard.value = 0;
+				playerCard1 = blankPlayerCard;
+				playerCard2 = blankPlayerCard;
+				
+				updateScore();
+				display();
+				refresh = false;
+			}
+						
+		</script>
+	</head>
+	
+	<body onload = "initialize();">
+	
+		<img src = "background.jpg" class = "back">
+		
+		<div class = "bunch">
+			<h1>
+				Let's Play 21
+			</h1>
+	
+			<h4>
+				The Dealer
+			</h4>
+			<div id = "oppHand">
+			<img src = "cardimages/back-red-75-1.png" id = "opp1"/>
+			<img src = "cardimages/back-red-75-1.png" id = "opp2"/>
+			<div id = "oppCardDraw"></div>
+			</div>
+		
+			<div id = "oppScore"></div>
+		
+			</br>
+			<h4>The Player</h4>
+			<div id = "pHand">
+			<img src = "cardimages/back-blue-75-1.png" id = "p1"/>
+			<img src = "cardimages/back-blue-75-1.png" id = "p2"/>
+			<div id = "pCardDraw"></div>
+			</div>
+		
+			<div id = "pScore"></div>
+		
+			<div id = "stat"></div>
+			
+			<div class = "columncontainer con2">
+				<div class = "column1">
+					<button class = "but green" onclick = "drawCards();" id = "start">Start Game</button>
+				</div>
+				<div class = "column1">
+					<button class = "but black" onclick = "hitMove();" id = "hit" disabled>Hit</button>
+				</div>
+				<div class = "column1">
+					<button class = "but black" onclick = "standMove();" id = "stand" disabled>Stand</button>
+				</div>
+				<div class = "column1">
+					<button class = "but black" onclick = "reset();" id = "reset" disabled>Reset Game</button>
+				</div>
+			</div>
+			
+			<div class = "columncontainer" id = "links">
+				<div class = "column">
+					<a href = "index.html?button=false" class = "link"> Home Page </a>
+				</div>
+				<div class = "column">
+					<a href = "index2.html" class = "link"> Learn To Play</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

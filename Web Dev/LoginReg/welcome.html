@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>Sample Page</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />	
+		<script>
+			function initialize()
+			{
+				//Checks to see whether or not the data variable has a firstname property.
+				if (data.firstname)
+					document.getElementById("greet").innerHTML = "Hello, " + data.firstname + " " + data.lastname + ".";
+				else
+					document.getElementById("greet").innerHTML = "Username or Password is incorrect";
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+		<span id = "greet"></span>
+	</body>
+</html>

@@ -1,0 +1,160 @@
+<!-- Ivan Turner -->
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Rock Paper Scissor</title>
+		<link rel = "stylesheet" href = "rps 2017.css" />
+		<style></style>
+        
+        <script>
+			function initialize()
+			{
+				//Constants
+				PAPER = 1, SCISSOR = 2, ROCK = 3;
+				DRAW = 0, PLAYER = 1, COMPUTER = 2;
+				
+				computerImage = document.getElementById("compimg");
+				playerImage = document.getElementById("pimg");
+				computerScoreOutput = document.getElementById("compscore");
+				playerScoreOutput = document.getElementById("playerscore");
+				headElement = document.getElementById("heading");
+				
+				//Game variables including one each for the player's and computer's selection and one for the roundResult.
+				playerSelection = -1;
+				computerSelection = -1;
+				playerScore = 0;
+				computerScore = 0;
+
+				roundResult = PLAYER;
+			}
+		
+			function makeComputerSelection()
+			{
+				computerSelection = parseInt(Math.random() * 3) + 1;
+			}
+			
+			/*
+				When building an algorithm, develop a pattern/sequence that works toward completing the task and then analyze the special cases.
+				
+				In RPS, the pattern created for determining the round winner is the value of the weapon.  The higher weapon wins.
+				The special case is a ROCK vs. PAPER combination.
+			*/
+			function determineWinner(pSel)
+			{
+				playerSelection = pSel;
+
+				makeComputerSelection();
+				/*
+					Check the special cases first so that they don't get ignored through the course of pattern.
+					
+					Since all of the results are mutually exclusive, build the decision tree using ifs AND elses.  If a condition proves true, store the result and the function is done.
+					
+					Only if the condition proves false do we move on and check further conditions.
+				*/
+				if (computerSelection == PAPER && playerSelection == ROCK)
+				{
+					roundResult = COMPUTER;
+				}
+				else
+				{
+					if (computerSelection == ROCK && playerSelection == PAPER)
+					{
+						roundResult = PLAYER;
+					}
+					else
+					{
+						if (computerSelection > playerSelection)
+						{
+							roundResult = COMPUTER;
+						}
+						else
+						{
+							if (playerSelection > computerSelection)
+							{
+								roundResult = PLAYER;
+							}
+							else
+							{
+								/*
+									If all other possibilities have been exhausted through the use of the pattern and special cases, we are left with a draw.  No question need be asked because this is the only possibility that remains.
+									
+									This is also known as the DEFAULT CASE.
+								*/
+								roundResult = DRAW;
+							}
+						}
+					}
+				}
+				
+				updateScore();
+				displayResult();
+			}
+			
+			function updateScore()
+			{
+				if (roundResult == PLAYER)
+					playerScore++;
+					
+				if (roundResult == COMPUTER)
+					computerScore++;
+			}
+			
+			function displayResult()
+			{
+				/*
+					Though the conditionals here could be nested (if else etc..., it's unnecessary because they are not dependant upon one another.
+				*/
+				//Display the image of the computer's selected weapon.
+				if (computerSelection == PAPER)
+				{
+					computerImage.src = "images/paper.png";
+				}
+
+				if (computerSelection == SCISSOR)
+				{
+					computerImage.src = "images/scissor.png";
+				}
+
+				if (computerSelection == ROCK)
+				{
+					computerImage.src = "images/rock.png";
+				}
+				
+				if (playerSelection == PAPER)
+				{
+					playerImage.src = "images/paper.png";
+				}
+				
+				if (playerSelection == SCISSOR)
+				{
+					playerImage.src = "images/scissor.png";
+				}
+
+				if (playerSelection == ROCK)
+				{
+					playerImage.src = "images/rock.png";
+				}
+
+				playerScoreOutput.innerHTML = playerScore;
+				computerScoreOutput.innerHTML = computerScore;
+			}
+		</script>
+	</head>
+		
+	<body onload = "initialize();">
+		<div>Rock Paper Scissor!</div>
+		<h3>
+			Player Score: <span id = "playerscore">0</span> / Computer Score: <span id = "compscore">0</span>
+		</h3>
+		<hr />
+		<h4>
+			<img onclick = "determineWinner(ROCK);" src = "images/rock.png" />
+			<img onclick = "determineWinner(SCISSOR);" src = "images/scissor.png" />
+			<img onclick = "determineWinner(PAPER);" src = "images/paper.png" /><br />
+			<img src = "images/ref.png" /><br />
+			
+			You: <img id = "pimg" src = "" /> vs. Your Opponent: <img id = "compimg" src = "" />
+		</h4>
+	</body>
+</html>

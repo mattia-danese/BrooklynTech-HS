@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title></title>
+		<link rel = "stylesheet" href = "columns.css" />
+		<link rel = "stylesheet" href = "roster.css" />
+		<style></style>
+		<script src = "utilities.js"></script>
+		<script src = "namedata.js"></script>
+		<script>
+		
+			function initialize()
+			{
+				con = document.getElementById("newgroup");
+				groupA = document.getElementById("gA");
+				total = 0;
+				idx = 0;
+				idNums = [];
+				Elements = [];
+				all = [];
+				A = [];
+				getPeople();
+				offset = 0;
+			}
+			function getPeople()
+			{
+					addPeep = setInterval(function () 
+					{
+						if (total > 29)
+						{
+							return;
+						}
+						else
+						{
+							var x = getRandomInteger(0, allPeople.length-1);
+							Info = allPeople[x].split(",");
+							var element = document.createElement("li");
+
+						
+							Person = {};
+							Person.name = Info[1];
+							Person.gender = Info[0];
+							var y = getRandomInteger(1,30);
+							while (idNums.includes(y) == true)
+							{
+								y = getRandomInteger(1,30);
+							}
+							idNums.push(y);
+							element.innerHTML = Info[1] + "," + y;
+							Person.idNum = y;
+							element.number = idx;
+							Elements.push(element);
+							all.push(Person);
+							
+							con.appendChild(element);
+							
+							
+							element.addEventListener("click", function()
+																		{
+																			//alert(idNums);
+																			//alert(all[this.number].idNum);
+																			//alert(this.number);
+																			idNums.splice(this.number - offset, 1);
+																			//alert(idNums);
+																			var newElement = document.createElement("li");
+																			newElement.innerHTML = all[this.number].name + "," + all[this.number].idNum;
+																			groupA.appendChild(newElement);
+																			con.removeChild(this);
+																			for (var i = 0; i < Elements.length; i++)
+																			{
+																				Elements[i].number = Elements[i].number - 1;
+																			}
+																			idx = idx - 1;
+																			total = total - 1;
+																			offset++;
+																			/*doesn't work when new elements. Idx stays at 29 but offset keeps increasing*/
+																		}
+													);
+							total++;
+							idx++;
+						}
+					},10);
+			}
+			
+			
+		</script>
+	</head>
+		
+	<body onload = "initialize();">
+		<span class = "columncontainer">
+			<div class = "column">
+				<ol id = "newgroup"><h1>Prospective Applicants</h1><hr /></ol>
+			</div>
+			<div class = "column">
+				<ol id = "gA"><h1>Add to Group A</h1><hr /></ol>
+				<ol><h1>Add to Group B</h1><hr /></ol>
+				<ol><h1>Add to Group C</h1><hr /></ol>
+				<ol><h1>Add to Group D</h1><hr /></ol>
+			</div>
+		</span>
+	</body>
+</html>

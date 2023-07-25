@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style>
+			h4
+			{
+				color:blue;
+			}
+			h1
+			{
+				color:red;
+			}
+		</style>
+		<script>
+			function initialize()
+			{
+				Guess = 999;
+				Guess2 = 999;
+				Guess3 = 999;
+				guessFinal = 0;
+				guessBut = "";
+				num=Math.random();
+				num*=100;
+				num=parseInt(num);
+				num=Math.round(num);
+				Degree = "";
+				Attempts = 5;
+				String1= "nothing";
+				String2 = "nothing";
+				String3 = "nothing";
+				WOL = "";
+				attemptOutput = document.getElementById("try");
+				guessFinalOut = document.getElementById("Gfinal");
+				DegreeOut = document.getElementById("Dfinal");
+				endMSG = document.getElementById("end");
+			}
+			function display()
+			{
+				attemptOutput.innerHTML = Attempts;
+				guessFinalOut.innerHTML = guessFinal;
+				DegreeOut.innerHTML = Degree;
+				endMSG.innerHTML = WOL;
+			}
+			function modifyGuess(modifier)
+			{
+				if (Guess == 999)
+				{
+					Guess = modifier;
+				}
+				else
+				{
+					if (Guess2 == 999)
+					{
+						Guess2 = modifier;
+					}
+					else
+					{
+						Guess3 = modifier;
+					}
+				}
+			}
+			
+			function resetGuess()
+			{
+				if (document.getElementById("reset").innerHTML == "Reset Game")
+				{
+					document.getElementById("reset").innerHTML="Reset";
+					guessFinal = "n/a";
+					Degree = "";
+					WOL = "";
+					guessFinalOut = document.getElementById("Gfinal");
+					DegreeOut = document.getElementById("Dfinal");
+					display();
+					guessFinalOut = document.getElementById("Gfinal2");
+					DegreeOut = document.getElementById("Dfinal2");
+					display();
+					guessFinalOut = document.getElementById("Gfinal3");
+					DegreeOut = document.getElementById("Dfinal3");
+					display();
+					guessFinalOut = document.getElementById("Gfinal4");
+					DegreeOut = document.getElementById("Dfinal4");
+					display();
+					guessFinalOut = document.getElementById("Gfinal5");
+					DegreeOut = document.getElementById("Dfinal5");
+					Attempts = 5;
+					display();
+					initialize();
+				}
+				else
+				{
+				Guess = 999;
+				
+				Guess2 = 999;
+				Guess3 = 999;
+				}
+			}
+			
+			function submitGuess()
+			{
+				if (Guess2==999 && Guess3==999)
+				{
+					guessFinal=Guess;
+					Guess=999;
+				}
+				else
+				{
+					String1 = Guess.toString();	
+					String2 = Guess2.toString();
+					guessBut = String1.concat(String2);
+					if (Guess3 != 999)
+					{
+						String3 = Guess3.toString();
+						guessBut = guessBut.concat(String3);
+					}
+					guessFinal = parseInt(guessBut);
+					resetGuess();	
+				}
+				if (guessFinal==num)
+				{
+					WOL="You won!";
+					document.getElementById("reset").innerHTML="Reset Game";
+					Degree = "The Exact Number";
+				}
+				else 
+				{
+					if(num-5<=guessFinal && guessFinal<=num+5)
+					{
+						Degree = "Very Hot";
+					}
+					else
+					{
+						if (num-8<=guessFinal && guessFinal<=num+8)
+						{
+							
+							Degree = "Hot";
+						}
+						else
+						{
+							if(num-15<=guessFinal && guessFinal<=num+15)
+							{
+								Degree = "Very Warm";
+							}
+							else
+							{
+								if(num-20<=guessFinal && guessFinal<=num+20)
+								{
+									Degree = "Warm";
+								}
+								else
+								{
+									if (num-30<=guessFinal && guessFinal<=num+30)
+									{
+										Degree = "Cool";
+									}
+									else
+									{
+										if(num-40<=guessFinal && guessFinal<=num+40)
+										{
+											Degree = "Very Cool";
+										}
+										else
+										{
+											if(num-55<=guessFinal && guessFinal<=num+55)
+											{
+												Degree = "Cold";
+											}
+											else
+											{
+												Degree = "Very Cold";
+											}
+										}
+									}
+								}
+							}
+							
+						}
+					}
+				}
+				
+				if (Attempts==5)
+				{
+					DegreeOut = document.getElementById("Dfinal");
+					guessFinalOut = document.getElementById("Gfinal");
+				}
+				else
+				{
+					if (Attempts==4)
+					{
+						DegreeOut = document.getElementById("Dfinal2");
+						guessFinalOut = document.getElementById("Gfinal2");
+					}
+					else
+					{
+						if(Attempts==3)
+						{
+							DegreeOut = document.getElementById("Dfinal3");
+							guessFinalOut = document.getElementById("Gfinal3");
+						}
+						else
+						{
+							if(Attempts==2) 
+							{
+								DegreeOut = document.getElementById("Dfinal4");
+								guessFinalOut = document.getElementById("Gfinal4");
+							}
+							else
+							{
+								DegreeOut = document.getElementById("Dfinal5");
+								guessFinalOut = document.getElementById("Gfinal5");
+							}
+							
+						}
+						
+					}
+				}
+				Attempts = Attempts - 1;
+				if(Degree == "Very Hot")
+				{
+					Attempts = Attempts + 1;
+				}
+				if(Attempts == 0 )
+				{
+					document.getElementById("reset").innerHTML = "Reset Game";
+					if(guessFinal != num)
+					{
+						WOL = "You lost!";
+					}
+				}
+				display();
+			}
+		</script>
+	</head>
+	<body onload = "initialize()";>  
+	<button onclick = "modifyGuess(0);">
+	0
+	</button>
+	<button onclick = "modifyGuess(1);">
+	1
+	</button>
+	<button onclick = "modifyGuess(2);">
+	2
+	</button>
+	<button onclick = "modifyGuess(3)";>
+	3
+	</button>
+	<button onclick = "modifyGuess(4);">
+	4
+	</button>
+	<button onclick = "modifyGuess(5);">
+	5
+	</button>
+	<button onclick = "modifyGuess(6);">
+	6
+	</button>
+	<button onclick = "modifyGuess(7);">
+	7
+	</button>
+	<button onclick = "modifyGuess(8);">
+	8
+	</button>
+	<button onclick = "modifyGuess(9);">
+	9
+	</button>
+	<button id = "reset" onclick = "resetGuess();">
+	Reset
+	</button>
+	<button = onclick = "submitGuess();">
+	Submit 
+	</button>
+	
+	<hr />
+	
+	<h4><ins>Aim of the Game</ins></h4>
+	<p>In order to win this game, you have to guess a randomly generated number, from 0-100, in 5 attempts or less.<br />
+	To help you, you will be told the range of how far away each of your attempts are to the random number.<br />
+	As a bonus, get "Very Hot" and you'll receive an extra attempt!</p>
+
+	<hr />
+	
+	<h4><ins>Your Game</ins></h4>
+	
+	<p>Attempts left:<span id = "try">5</span></p>
+	
+	<div>First Guess: <span id = "Gfinal">n/a</span>(<span id = "Dfinal"></span>)</div>
+	<div>Second Guess: <span id = "Gfinal2">n/a</span>(<span id = "Dfinal2"></span>)</div>
+	<div>Third Guess:<span id = "Gfinal3">n/a</span>(<span id = "Dfinal3"></span>)</div>
+	<div>Fourth Guess:<span id = "Gfinal4">n/a</span>(<span id = "Dfinal4"></span>)</div>
+	<div>Fifth Guess: <span id = "Gfinal5">n/a</span>(<span id = "Dfinal5"></span>)<div>
+	
+	<hr />
+	
+	<h4><ins>Key</ins></h4>
+	<div>Very Hot=Within 5</div>
+	<div>Hot=Within 8</div>
+	<div>Very Warm=Within 15</div>
+	<div>Warm=Within 20</div>
+	<div>Cool=Within 30</div>
+	<div>Very Cool=Within 40</div>
+	<div>Cold=Within 55</div>
+	<div>Very Cold=More than 55 away</div>
+	
+	<hr />
+	
+	<h1 id = "end"></h1>
+	
+	</body>
+</html>
+

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style></style>
+		<script>
+			function initialize()
+			{
+				x = document.getElementById("stuff");
+			}
+			function stuff()
+			{
+				if(document.getElementById("myform").height.value > 100)
+				{
+					alert("yes");
+				}
+				else
+				{
+					alert("no");
+				}
+				display();
+			}
+			function display()
+			{
+				x = 100;
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+	<form id = "myform" onsubmit = "stuff()">
+		What's your height?
+		<br />
+		<input type = "text" name = "height">
+		<br />
+		What's your gender?
+		<br />
+		<input type = "radio" name = "gender" value = "male"> Male
+		<br />
+		<input type = "radio" name = "gender" value = "female"> Female
+		<br />
+		<input type = "submit">
+		<br />
+		<div>huhuhuh<div id = "stuff"></div></div>
+	</body>
+</html>

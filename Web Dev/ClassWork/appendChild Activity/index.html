@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style></style>
+		<script>
+			function initialize()
+			{
+				deck = [];
+				imgIdx = 0;
+				for (var i = 0; i <52; i++)
+				{
+					card = {};
+					card.img = "cardimages/" + imgIdx + ".png";
+					deck.push(card);
+					imgIdx++;
+				}
+				
+				con = document.getElementById("container");
+				
+			}
+			function show()
+			{
+				x = 0;
+				var newElement = document.createElement("img");
+				newElement.src = deck[x].img;
+				newElement.imageName = deck[x].img;
+				newElement.addEventListener("click", function () {get(this)});
+				deck.splice(x,1);
+				con.appendChild(newElement);
+			}
+			function get(element)
+			{
+				con.removeChild(element);
+				card = {};
+				card.img = element.imageName;
+				deck.push(card);
+				//alert(deck[(deck.length)-1]);
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+	<img src = "cardimages/back-red-75-1.png" onclick = "show();">
+	<div id = "container">
+	</div>
+	</body>
+</html>

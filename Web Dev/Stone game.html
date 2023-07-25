@@ -1,0 +1,327 @@
+<!DOCTYPE HTML>
+<!--Philip-->
+<html>
+	<head>
+		<title></title>
+		<style>
+		body
+		{
+			background-color : #94e2ff;
+		}
+		h1
+		{
+			text-align : center;
+		}
+		h3
+		{
+			color : blue;
+		}
+		h4
+		{
+			color : green;
+		}
+		button
+		{
+			background-color: #efa0ff;
+			border-radius: 10px;
+			border: thin solid black;
+			padding: 10px;
+			margin: 10px;
+			color: red;
+			font-weight: bold;
+		}
+		.hide , .hide2 , #restart 
+		{
+			display:none;
+		}
+		</style>
+		<script>
+			function initialize()
+			{
+				pile1 = 3;
+				pile1Output = document.getElementById('p1');
+				pile1Output.innerHTML = pile1;
+				pile2 = 3;
+				pile2Output = document.getElementById('p2');
+				pile2Output.innerHTML = pile2;
+				pile3 = 3;
+				pile3Output = document.getElementById('p3');
+				pile3Output.innerHTML = pile3;
+				
+				Unk = "";
+				UnkOutput = document.getElementById('msg');
+				msg = document.getElementById('message');
+				UnkOutput.innerHTML = "There are 3 piles of stones. On your turn, click a button to take stone(s) from the pile. On our turn, we will do the same. Which ever of us removes the last stone from the board is the loser. Gloob insists on going first.";
+				
+				strtB = document.getElementById('startB');
+				allHide = document.getElementsByClassName("hide");
+				allHide2 = document.getElementsByClassName("hide2");
+				rst = document.getElementById("restart");
+			}
+
+			function start()
+			{
+				if (pile1 == 3 && pile2 == 3 && pile3 == 3)
+				{
+					for(var i = 0; i < allHide.length; i++)
+					{
+						allHide[i].style.display = "block";
+					}
+					
+					for(var a = 0; a < allHide2.length; a++)
+					{
+						allHide2[a].style.display = "inline";
+					}
+					msg.style.display = "block";
+					strtB.style.display = "none";
+					cavemenTurn();
+				}
+				else
+				{
+					return;
+				}
+			}
+			
+			function cavemenTurn()
+			{
+				if (pile1 > pile2 && pile1 > pile3)
+				{
+					pile1--;
+					UnkOutput.innerHTML = "Gloob and I has take a stone from pile 1.";
+				}
+				else
+				{
+					if (pile2 > pile1 && pile2 > pile3)
+					{
+						pile2--;
+						UnkOutput.innerHTML = "Gloob and I has take a stone from pile 2.";
+					}
+					else
+					{
+						if (pile3 > pile1 && pile3 > pile2)
+						{
+							pile3--;
+							UnkOutput.innerHTML = "Gloob and I has take a stone from pile 3.";
+						}
+						else
+						{
+							if (pile1 == pile2 && pile1 == pile3)
+							{
+								pile = Math.floor(Math.random() * 3) + 1;
+								if (pile == 1)
+								{
+									pile1 --;
+									UnkOutput.innerHTML = "Gloob and I has take a stone from pile 1.";
+								}
+								if (pile == 2)
+								{
+									pile2 --;
+									UnkOutput.innerHTML = "Gloob and I has take a stone from pile 2.";
+								}
+								if (pile == 3)
+								{
+									pile3 --;
+									UnkOutput.innerHTML = "Gloob and I has take a stone from pile 3.";
+								}
+							}
+							else
+							{
+								if (pile1 == pile2)
+								{
+									pile = Math.floor(Math.random() * 2) + 1;
+									if (pile == 1)
+									{
+										pile1 --;
+										UnkOutput.innerHTML = "Gloob and I has take a stone from pile 1.";
+									}
+									if (pile == 2)
+									{
+										pile2 --;
+										UnkOutput.innerHTML = "Gloob and I has take a stone from pile 2.";
+									}
+								}
+								else
+								{
+									if (pile2 == pile3)
+									{
+										pile = Math.floor(Math.random() * 2) + 1;
+										if (pile == 1)
+										{
+											pile2 --;
+											UnkOutput.innerHTML = "Gloob and I has take a stone from pile 2.";
+										}
+										if (pile == 2)
+										{
+											pile3 --;
+											UnkOutput.innerHTML = "Gloob and I has take a stone from pile 3.";
+										}
+									}
+									else
+									{
+										if (pile1 == pile3)
+										{
+											pile = Math.floor(Math.random() * 2) + 1;
+											if (pile == 1)
+											{
+												pile1 --;
+												UnkOutput.innerHTML = "Gloob and I has take a stone from pile 1.";
+											}
+											if (pile == 2)
+											{
+												pile3 --;
+												UnkOutput.innerHTML = "Gloob and I has take a stone from pile 3.";
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				pile1Output.innerHTML = pile1;
+				pile2Output.innerHTML = pile2;
+				pile3Output.innerHTML = pile3;
+				
+				if (pile1 == 0 && pile2 == 0 && pile3 == 0)
+				{
+					playerWins();
+				}		
+			}
+			
+			function takeStone(num)
+			{				
+				if (pile1 == 3 && pile2 == 3 && pile3 == 3 || pile1 < num)
+				{
+					return;
+				}
+				else
+				{
+					pile1 = pile1 - num;
+					pile1Output.innerHTML = pile1;
+				}	
+				
+				if (pile1 == 0 && pile2 == 0 && pile3 == 0)
+				{
+					cavemenWins();
+				}
+				else
+				{
+					cavemenTurn();
+				}
+			}
+			
+			function takeStone1(num)
+			{				
+				if (pile1 == 3 && pile2 == 3 && pile3 == 3 || pile2 < num)
+				{
+					return;
+				}
+				else
+				{	
+					pile2 = pile2 - num;
+					pile2Output.innerHTML = pile2;
+				}
+				
+				if (pile1 == 0 && pile2 == 0 && pile3 == 0)
+				{
+					cavemenWins();
+				}
+				else
+				{
+					cavemenTurn();
+				}
+			}
+
+			function takeStone2(num)
+			{				
+				if (pile1 == 3 && pile2 == 3 && pile3 == 3 || pile3 < num)
+				{
+					return;
+				}
+				else
+				{	
+					pile3 = pile3 - num;
+					pile3Output.innerHTML = pile3;
+				}
+				
+				if (pile1 == 0 && pile2 == 0 && pile3 == 0)
+				{
+					cavemenWins();
+					document.getElementById("restart").disabled = false;
+				}
+				else
+				{
+					cavemenTurn();
+					document.getElementById("restart").disabled = false;
+				}
+			}
+
+			function cavemenWins()
+			{
+				UnkOutput.innerHTML = "I win! Better luck next time.";
+				for(var i = 0; i < allHide.length; i++)
+					{
+						allHide[i].style.display = "none";
+					}
+				for(var a = 0; a < allHide2.length; a++)
+					{
+						allHide2[a].style.display = "none";
+					}
+				rst.style.display = "block";
+			}
+			
+			function playerWins()
+			{
+				UnkOutput.innerHTML = "Aw shucks! I lose.";
+				for(var i = 0; i < allHide.length; i++)
+					{
+						allHide[i].style.display = "none";
+					}
+				for(var a = 0; a < allHide2.length; a++)
+					{
+						allHide2[a].style.display = "none";
+					}
+				rst.style.display = "block";
+			}
+			
+			function restart()
+			{
+				rst.style.display = "none";
+				
+				pile1 = 3;
+				pile1Output = document.getElementById('p1');
+				pile1Output.innerHTML = pile1;
+				pile2 = 3;
+				pile2Output = document.getElementById('p2');
+				pile2Output.innerHTML = pile2;
+				pile3 = 3;
+				pile3Output = document.getElementById('p3');
+				pile3Output.innerHTML = pile3;
+				
+				start();
+			}
+		</script>
+		
+	</head>
+	<body onload = "initialize();">
+	<center>
+	<br><h1>Stone Game</h1></br>
+	<button id = "startB" onclick = "start()">Start Game</button>
+	<p  class = "hide"><h4 class = "hide">Pile 1 : <span id = "p1"></span></h4></p>
+	<button class = "hide2" id = "disable" onclick = "takeStone(1)">Take 1 stone</button>
+	<button class = "hide2" id = "disable1" onclick = "takeStone(2)">Take 2 stones</button>
+	<button class = "hide2" id = "disable2" onclick = "takeStone(3)">Take 3 stones</button>
+	<p class = "hide"><h4  class = "hide">Pile 2 : <span id = "p2"></span></h4></p>
+	<button class = "hide2" id = "disable3" onclick = "takeStone1(1)">Take 1 stone</button>
+	<button class = "hide2" id = "disable4" onclick = "takeStone1(2)">Take 2 stones</button>
+	<button class = "hide2" id = "disable5" onclick = "takeStone1(3)">Take 3 stones</button>
+	<p class = "hide" ><h4  class = "hide">Pile 3 : <span id = "p3"></span></h4></p>
+	<button class = "hide2" id = "disable6" onclick = "takeStone2(1)">Take 1 stone</button>
+	<button class = "hide2" id = "disable7" onclick = "takeStone2(2)">Take 2 stones</button>
+	<button class = "hide2" id = "disable8" onclick = "takeStone2(3)">Take 3 stones</button>
+	<br><h3 id = "message">Unk : <span id ="msg"></span><h3></br>
+	<button id = "restart" onclick = "restart();">Restart</button>
+	</center>
+	
+	</body>
+</html>

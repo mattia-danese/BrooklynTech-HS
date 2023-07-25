@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style>
+		body
+		{
+			text-align:center;
+			background-color:#556B2F;
+		}
+		div img
+		{
+			width:150px;
+		}
+		.ending
+		{
+			color:red;
+			font-size:50pt;
+		}
+		</style>
+		<script>
+			function initialize()
+			{
+				alive = 15;
+				endmsg = "You will never defeat us!";
+				msgList = [];
+				x = 0;
+				msgOut = document.getElementById("msg");
+				numOut = document.getElementById("num");
+				lastOut = document.getElementById("last");
+				display();
+			}
+			
+			function display()
+			{
+				msgOut.innerHTML = endmsg;
+				numOut.innerHTML = alive;
+				lastOut.innerHTML = lastmsg;
+			}
+			
+			function splat(id)
+			{
+					document.getElementById(id).src = "splatpic.png";
+					alive = alive - 1;
+					getMsg();
+					display();	
+			}
+			
+			function checkList()
+			{
+				for (var i = 0;i < msgList.length;i++)
+				{
+					if (msgList[i] == x)
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+			
+			function randomNumber(lower,upper)
+			{
+				x = parseInt (Math.random()*(upper-(lower-1))+lower);
+				while (checkList() == true)
+				{
+					x = parseInt (Math.random()*(upper-(lower-1))+lower);	
+				}
+				msgList.push(x);
+			}
+			
+			function getMsg()
+			{
+				if (alive == 0)
+				{
+					endmsg = "You've killed us all!";
+					lastmsg = "You Win!";
+					
+				}
+				if (alive == 13 || alive == 11 || alive == 9 || alive == 7 || alive == 5 || alive == 3 || alive == 1)
+				{
+					endmsg = "Ouch!";
+				}
+				else
+				{
+					if (alive == 14 || alive == 12 || alive == 10)
+					{
+						randomNumber(1,3);
+						if (x == 1)
+						{
+							endmsg = "That's all you got?";
+						}
+						if (x == 2)
+						{
+							endmsg = "Haha that tickles!";
+						}
+						if (x == 3)
+						{
+							endmsg = "My grandma can do better than you!";
+						}
+					}
+					if (alive == 8 || alive == 6 || alive == 4 || alive == 2)
+					{
+						randomNumber(4,7);
+						if (x == 4)
+						{
+							endmsg = "I didn't mean what I said, please stop!";
+						}
+						if (x == 5)
+						{
+							endmsg = "I'm sorry! Now please stop this!";
+						}
+						if (x == 6)
+						{
+							endmsg = "Let us be! We didn't do anything to you!";
+						}
+						if ( x ==7)
+						{
+							endmsg = "We'll do anything if you can please just stop!";
+						}
+					}
+				}
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+	<h1> Bug Splat</h1>
+	<div>
+	<img src = "bugpic.jpg" id = "bpic" onclick = "splat('bpic');" />
+	<img src = "bugpic.jpg" id = "bpic2" onclick = "splat('bpic2');" />
+	<img src = "bugpic.jpg" id = "bpic3" onclick = "splat('bpic3');" />
+	<img src = "bugpic.jpg" id = "bpic4" onclick = "splat('bpic4');" />
+	<img src = "bugpic.jpg" id = "bpic5" onclick = "splat('bpic5');" />
+	</div>
+	
+	<div>
+	<img src = "bugpic.jpg" id = "bpic6" onclick = "splat('bpic6');" />
+	<img src = "bugpic.jpg" id = "bpic7" onclick = "splat('bpic7');" />
+	<img src = "bugpic.jpg" id = "bpic8" onclick = "splat('bpic8');" />
+	<img src = "bugpic.jpg" id = "bpic9" onclick = "splat('bpic9');" />
+	<img src = "bugpic.jpg" id = "bpic10" onclick = "splat('bpic10');" />
+	</div>
+	
+	<div>
+	<img src = "bugpic.jpg" id = "bpic11" onclick = "splat('bpic11');" />
+	<img src = "bugpic.jpg" id = "bpic12" onclick = "splat('bpic12');" />
+	<img src = "bugpic.jpg" id = "bpic13" onclick = "splat('bpic13');" />
+	<img src = "bugpic.jpg" id = "bpic14" onclick = "splat('bpic14');" />
+	<img src = "bugpic.jpg" id = "bpic15" onclick = "splat('bpic15');" />
+	</div>
+	<h3 id = "msg"></h3>
+	<h4>Bugs Alive:<span id = "num"></span></h4>
+	<div id = "last" class = "ending"></div>
+	</body>
+</html>
+

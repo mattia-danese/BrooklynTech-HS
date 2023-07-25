@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>CSS Fonts</title>
+		
+		<link rel = "stylesheet" type = "text/css" href = "CSS Fonts.css" />
+		<link rel = "stylesheet" type = "text/css" href = "columns.css" />
+		<style></style>
+		
+		<script src = "CSS Fonts.js"></script>
+	</head>
+	<body onload = "initialize();">
+		<h1>Fonts in CSS</h1>		
+		
+		<div class = "columncontainer">
+			<div class = "column" style = "width:20%;">
+				<div id = "inorder">
+					<button id = "prevbtn" onclick = "moveIdx(btnIdx-1);"></button>
+					<button id = "nextbtn" onclick = "moveIdx(btnIdx+1);"></button>
+				</div>
+				
+				<div id = "freenav">
+					<button id = "prevbtn" onclick = "moveIdx(FAMILY);">Font Family</button>
+					<button id = "nextbtn" onclick = "moveIdx(SIZE);">Font Size</button>
+					<button id = "prevbtn" onclick = "moveIdx(WEIGHT);">Font Weight</button>
+					<button id = "nextbtn" onclick = "moveIdx(STYLE);">Font Style</button>
+					<button id = "prevbtn" onclick = "moveIdx(DECORATION);">Text Decoration</button>
+					<button id = "nextbtn" onclick = "moveIdx(ALIGN);">Text Align</button>
+					<button id = "nextbtn" onclick = "moveIdx(SHORTHAND);">Shorthand</button>
+				</div>
+
+				<hr />
+				<span id = "ctrlpnls" >
+				<div id = "familypnl">
+					<button onclick = "changeProperty(FAMILY, 'arial');">Arial</button>
+					<button onclick = "changeProperty(FAMILY, 'copperplate gothic');">Copperplate Gothic</button>
+					<button onclick = "changeProperty(FAMILY, 'times new roman');">Times New Roman</button>
+					<button onclick = "changeProperty(FAMILY, 'comic sans ms');">Comic Sans Ms</button>
+				</div>
+				
+				<div id = "sizepnl">
+					<button onclick = "changeSize(-1);">-</button> <span id = "fontsize"></span> <button onclick = "changeSize(1);">+</button>
+					<button onclick = "changeMeasurement('pt');">Change to points</button>
+					<button onclick = "changeMeasurement('in');">Change to Inches</button>
+					<button onclick = "changeMeasurement('cm');">Change to Centimeters</button>
+					<button onclick = "changeMeasurement('px');">Change to Pixels</button>
+				</div>
+				
+				<div id = "weightpnl">
+					<button onclick = "changeProperty(WEIGHT, 'bold');">Make Bold</button>
+					<button onclick = "changeProperty(WEIGHT, 'normal');">Make Normal</button>
+				</div>
+				
+				<div id = "stylepnl">
+					<button onclick = "changeProperty(STYLE, 'italic');">Make Italic</button>
+					<button onclick = "changeProperty(STYLE, 'normal');">Make Normal</button>
+				</div>
+				
+				<div id = "decorpnl">
+					<button onclick = "changeProperty(DECORATION, 'underline');">Underline</button>
+					<button onclick = "changeProperty(DECORATION, 'none');">Remove Underline</button>
+				</div>
+				
+				<div id = "alignpnl">
+					<button onclick = "changeProperty(ALIGN, 'left');">Left</button>
+					<button onclick = "changeProperty(ALIGN, 'right');">Right</button>
+					<button onclick = "changeProperty(ALIGN, 'center');">Centered</button>
+					<button onclick = "changeProperty(ALIGN, 'justify');">Justified</button>
+				</div>
+
+				<div id = "shorthandpnl">
+				</div>
+				</span>
+			</div>
+
+			<div class = "column" style = "width:60%">
+				<p id = "instructions" class = "instructions">
+					The font-family property in CSS tells the page which type of font to use for a specific element.  Whatever font you specify must exist on the client machine or it will default to the standard.  That's why it's better to stick with common fonts.
+				</p>
+			</div>
+		</div>
+		
+		<hr />
+		
+		<div class = "comment">
+			/*
+				Below is the CSS code for the text on this page.
+			*/
+		</div>
+		<div class = "code">
+			p<br />
+			{<br />
+				<span id = "code">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font-family:comic sans ms
+				</span>
+			}<br />
+		</div>
+
+		<hr />
+		
+		<p id = "sample">
+			The quick brown fox jumps over the lazy dog.  In doing so, the fox started a chain reaction that resulted in disaster.  The dog turned, trying to catch the fox in mid air, but missed.  As that happened, it noticed its tail flying out behind it and thought it was another animal.  Excitedly, the dog began chasing the tail like mad, spinning and spinning in such a fervor that it began to kick up the wind.  Before long there was a twister forming around it.  The twister grew and grew until it engulfed not only the countryside, but the whole world.  All at once, the spectrum of time and reality was affected, plunging all of the Earth in a brand new universe.  And that's when the adventures of the dog and the fox really began.
+		</p>
+
+
+	</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style>
+			body
+			{
+				text-align:center;
+			}
+		</style>
+		<script src = "dragondata.js"></script>
+		<script>
+			function initialize()
+			{
+				myDragon = {};
+				a = 0;
+				
+				mainImage = document.getElementById("big");
+				MSG = document.getElementById("msg");
+				captionOutput = document.getElementById("caption");
+				infoOutput = document.getElementById("info");
+				
+				x = dragoninfo.split(";");
+				y = dragons.split(";");
+				myDragon.story = x;
+				myDragon.name = y;
+			}
+			function toggleImage(image,idx)
+			{
+				mainImage.src = image.src;
+				MSG.style.display = "none";
+				captionOutput.innerHTML = myDragon.name[idx];
+				infoOutput.innerHTML = myDragon.story[idx];
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+	<div id = "msg" class = "msg">
+		Click an image to enlarge enlarge it 
+	</div>
+	<img width = 400px id = "big">
+	<div id = "caption"></div>
+	<div id = "info"></div>
+	<hr />
+	<img width = 15% class = "thumb" src = "images/Ash copy.png" onclick = "toggleImage(this,1);">
+	<img width = 15% class = "thumb" src = "images/Barnabas copy.png" onclick = "toggleImage(this,2);">
+	<img width = 15% class = "thumb" src = "images/Drake copy.png" onclick = "toggleImage(this,3);">
+	<img width = 15% class = "thumb" src = "images/Endisun copy.png" onclick = "toggleImage(this,4);">
+	<img width = 15% class = "thumb" src = "images/Lunar copy.png" onclick = "toggleImage(this,5);">
+	<img width = 15% class = "thumb" src = "images/Rax copy.png" onclick = "toggleImage(this,0);">
+	</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		
+		<link rel = "stylesheet" href = "columns.css" />
+		
+		<style>
+			body
+			{
+				background-color:#c1ffd5;
+			}
+			#heading
+			{
+				color: blue;
+				font-family: "Courier New";
+			}
+			textarea
+			{
+				resize:none;
+				width: 50vw;
+			}
+			#main
+			{
+				width:15%;
+				height:20%;
+			}
+			#title
+			{
+				position:absolute;
+				display:inline;
+				left:17%;
+			}
+			#price
+			{
+				position:absolute;
+				left:17%;
+				top:12%;
+			}
+			#description
+			{
+				position:absolute;
+				left:17%;
+				top:14%;
+				width:40%;
+			}
+			#console
+			{
+				position:absolute;
+				left:17%;
+				top:25%;
+			}
+			#quantity
+			{
+				position:absolute;
+				left:23%;
+				top:25%;
+			}
+			#addBut
+			{
+				position:absolute;
+				left:25%;
+				top:25%;
+			}
+			#purBut
+			{
+				position:absolute;
+				left:25%;
+				top:29%;
+			}
+			#userCart
+			{
+				position:absolute;
+				left:65%;
+				top:10%;
+			}
+			#allReviews
+			{
+				width:55%;
+			}
+			.small
+			{
+				width:100%;
+				height:50%;
+				margin-right:5%;
+			}
+			#related
+			{
+				margin-left:29%;
+			}
+			.bold
+			{
+				font-weight:bold;
+			}
+			#error
+			{
+				color:red;
+				display:none;
+			}
+		</style>
+		<script src = "utilities.js"></script>
+		<script src = "dataStuff.js"></script>
+		<script>
+			function initialize()
+			{
+				bigImg = document.getElementById("main");
+				bigTitle = document.getElementById("title");
+				bigPrice = document.getElementById("price");
+				bigWords = document.getElementById("description");
+				smallPics = document.getElementsByClassName("small");
+				consolePick = document.getElementById("console");
+				reviews = document.getElementsByClassName("rev");
+				qualitiyPick = document.getElementById("quantity");
+				Cart = document.getElementById("userCart");
+				List = document.getElementById("thelist");
+				newReview = document.getElementById("newRev");
+				allReviews = document.getElementById("allReviews");
+				lilTitles = document.getElementsByClassName("lilTitle");
+				lilPrices = document.getElementsByClassName("lilPrice");
+				Form = document.getElementById("form");
+				erMsg = document.getElementById("error");
+				
+				allCart = null;
+				cartSize = null;
+				x = null;
+				cartIdx = 0;
+				revCount = 4;
+				
+				makeBig();
+				makeSmall();
+				makeReviews();
+			}
+			function makeBig()
+			{
+				x = getRandomInteger(0, 3);
+				bigImg.src = images[x];
+				bigImg.num = x;
+				nums.splice(x,1);
+				bigTitle.innerHTML = title[x];
+				bigPrice.innerHTML = price[x];
+				bigWords.innerHTML = descriptions[x];
+			}
+			function makeSmall()
+			{
+				var x = 0;
+				for(var i = 0; i < products.length; i++)
+				{
+					if(bigImg.src.includes(images[i]) == false)
+					{
+						smallPics[x].src = images[i];
+						smallPics[x].num = nums[x];
+						lilTitles[x].innerHTML = title[i];
+						lilPrices[x].innerHTML = price[i];
+						smallPics[x].setAttribute("onclick","smallClick(this);");
+						x++;
+					}
+				}
+			}
+			function smallClick(z)
+			{
+				bigTitle.innerHTML = title[z.num];
+				bigPrice.innerHTML = price[z.num];
+				bigWords.innerHTML = descriptions[z.num];
+				z.src = images[bigImg.num];
+				var holder = bigImg.num;
+				bigImg.num = z.num;
+				bigImg.src = images[z.num];
+				z.num = holder;
+				x = z.num;
+				y = document.getElementsByClassName("newRev");
+				for (var i = y.length - 1; i >= 0; i--)
+				{
+					allReviews.removeChild(y[i]);
+				}
+				makeReviews();
+			}
+			function makeReviews()
+			{
+				for(var i = 0; i < reviews.length; i++)
+				{
+					reviews[i].innerHTML = revs[bigImg.num][i];
+				}
+			}
+			function addCart()
+			{
+				localStorage.setItem("cartItem" + cartIdx, title[bigImg.num] + ";" + price[bigImg.num] + ";" + consolePick.value + ";" + qualitiyPick.value);
+				displayCart();
+				cartIdx++;
+				
+			}
+			function displayCart()
+			{
+				var x = localStorage.getItem("cartItem" + cartIdx).split(";");
+				x[3] = "Quantity: " + x[3];
+				x = x.join(", ");
+				
+				var y = document.createElement("li");
+				y.innerHTML = x;
+				List.appendChild(y);
+			}
+			function clearCart() 
+			{
+				while (cartIdx != 0)
+				{
+					//alert(localStorage.getItem("cartItem" + (cartIdx-1)));
+					localStorage.removeItem("cartItem" + (cartIdx - 1));
+					cartIdx--;
+				}
+				allCart = document.getElementsByTagName("li");
+				for (var i = allCart.length - 1; i >= 0; i--)
+				{
+					List.removeChild(allCart[i]);
+				}
+			}
+			function subReview()
+			{
+				if((newReview.value.trim() == "") || (Form.rate.value == ""))
+				{
+					erMsg.display = "block";
+				}
+				else
+				{
+					erMsg.display = "none";
+					revCount++;
+					var newElement = document.createElement("div");
+					newElement.innerHTML = revCount + "." + " " + newReview.value + " RATE=" + Form.rate.value;
+					newElement.setAttribute("class", "newRev");
+					newReview.value = "";
+					allReviews.appendChild(newElement);	
+				}
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+		
+		<h1 id = "heading">
+			The Gaming Paradise
+		</h1>
+		<div class = "data">
+			<img id = "main"/>
+			<div id = "title" class = "bold"></div>
+			<div id = "price"></div>
+			<div id = "description"></div>
+		</div>
+		
+		<select size = "4" id = "console"> 
+			<option value = "Xbox 360">
+				Xbox 360
+			</option>
+			<option value = "Xbox One" >
+				Xbox One
+			</option>
+			<option value = "Playstation 3">
+				Playstation 3
+			</option>
+			<option value = "Playstation 4">
+				Playstation 4
+			</option>
+			<option value = "PC">
+				PC
+			</option>
+			<option value = "Wii">
+				Wii
+			</option>
+		</select>
+		<select size = "4" id = "quantity">
+			<option value = "1">
+				1
+			</option>
+			<option value = "2">
+				2
+			</option>
+			<option value = "3">
+				3
+			</option>
+			<option value = "4">
+				4
+			</option>
+			<option value = "5">
+				5
+			</option>
+		</select>
+		
+		<button onclick = "addCart();" id = "addBut">
+			Add to cart
+		</button>
+		<button onclick = "clearCart();" id = "purBut">
+			Purchase 
+		</button>
+		
+		<div id = "userCart" >
+			<div class = "bold">
+				Your Cart:
+			</div>
+			<ol id = "thelist">
+			</ol>
+		</div> 
+		
+		<hr />
+		
+		<div id = "allReviews">
+			<span class = "bold">Reviews</span>
+			<div class = "rev" id = "rev1"></div>
+			<div class = "rev" id = "rev2"></div>
+			<div class = "rev" id = "rev3"></div>
+			<div class = "rev" id = "rev4"></div>
+		</div>
+		<br />
+		<div>Write a Review</div>
+		<textarea id = "newRev" class = "cusrev"></textarea>
+		<div>
+			Rate:
+			<form id = "form">
+				1<input type = "radio" name = "rate" value = "1"/>
+				2<input type = "radio" name = "rate" value = "2"/>
+				3<input type = "radio" name = "rate" value = "3"/>
+				4<input type = "radio" name = "rate" value = "4"/>
+				5<input type = "radio" name = "rate" value = "5"/>
+			</form>
+		</div>
+		
+		<button onclick = "subReview();">
+			Submit Review
+		</button>
+		<div id = "error">
+			Please make sure to write a review and make a rating before submitting.
+		</div>
+		
+		<hr />
+
+		<div class = "columncontainer">
+			<div id = "related" class = "bold">
+				Related Products
+			</div>
+			
+			
+			<div class = "column">
+				<img class = "small" id = "lil1">
+				<div class = "lilTitle" id = "lilTitle1"></div>
+				<div class = "lilPrice" id = "lilPrice1"></div>
+			</div>
+			
+			<div class = "column">
+				<img class = "small" id = "lil2">
+				<div class = "lilTitle" id = "lilTitle2"></div>
+				<div class = "lilPrice" id = "lilPrice2"></div>
+			</div>
+			
+			<div class = "column">
+				<img class = "small" id = "lil3">
+				<div class = "lilTitle" id = "lilTitle3"></div>
+				<div class = "lilPrice" id = "lilPrice3"></div>
+			</div>
+		</div>
+	</body>
+</html>
+

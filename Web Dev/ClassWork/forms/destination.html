@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style></style>
+		<script>
+			function initialize()
+			{
+				output = [];
+				diver = document.getElementById("dv");
+				var x = location.search.split("&");
+				for (var i = 0; i < x.length; i++)
+				{
+					var y = x[i].indexOf("=");
+					output.push(x[i].slice(y + 1, x[i].length + 1));
+				}
+				for (var a = 0; a < output.length; a++)
+				{
+					diver.innerHTML = diver.innerHTML + " " + output[a];
+				}
+				diver.innerHTML = "Hello" + diver.innerHTML + "!";
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+		<div id = "dv">
+			
+		</div>
+	</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Hello Script</title>
+		<style></style>
+		<script>
+			function initialize()
+			{
+				num=0; 
+				//"=" is the assignment operator, not a comparison
+				//Must be single variable name on left and any programming convention that evaluates to a number on right
+				numToo=0; //Adding "var" before variable makes it local, other functions don't know it
+				ans="Nothing Yet"
+				/*Variable Types: Numbers, Strings, Bollean, Object
+				  Gloabl variables are easier to program because they are defined once and work everywhere
+				  Local variables are easier to control because you can have same name variables and they only work for one function, not all*/
+				//multiply();
+				//add(3,5);In order to get the local variables "num" and "numToo", add parameters to other function, in the case "add"
+				//display(); //num will show 3,"num" will show num
+				
+				numOutput = document.getElementById("numout"); 
+				//numOuput=variable 			->HTML element 
+				//document=object 				->owns "getElementById"
+				//getElementById=function call  ->functions belongs to "document"
+				//numout=argument(string) 		->provides the proper id
+				display();
+			}
+			function add()
+			{
+				ans=num+numToo;
+				display();
+			}
+			function modifynum(mod)
+			{
+				num +=mod //shortcut
+				//num++; -> adds one 
+				//num--; -> subtracts one 
+				//num=num+mod; -> formal
+				display()
+			}
+			function modify2num(mod)
+			{
+				num--;
+				display()
+			}
+			function modifynumToo(mod)
+			{
+				numToo=numToo+mod
+				display()
+			}
+			function modify2numToo(mod)
+			{
+				numToo--;
+				display()
+			}
+			function display()
+			{
+				numOutput.innerHTML = num;
+				numTooOutput.innerHTML = Num
+				//alert(ans);
+			}
+			function subtract()
+			{
+				ans=num-numToo;
+				display();
+			}
+			function multiply()
+			{
+				ans=num*numToo;
+				display();
+			}
+			function divide()
+			{
+				ans=num/numToo;
+				display();
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> <!--"onload"=event(attribute)-->
+		<button onclick="add();">
+			add
+		</button>
+		<button onclick="subtract();">
+			subtract
+		</button>
+		<button onclick="multiply();">
+			multiply
+		</button>
+		<button onclick="divide();">
+			divide
+		</button>
+		
+		<hr />
+		
+		<button onclick="modifynum(1);">
+			Add 1 to num
+		</button>
+		<button onclick="modifynumToo(1):">
+			Add 1 to numToo
+		</button>
+		<button onclick="modify2num(-1)">
+			Subtract 1 from num
+		</button>
+		<button onclick="modify2numToo(-1)">
+			Subtract 1 from numToo
+		<button/>
+		
+		<hr />
+		
+		num: <span id = "numout"></span><hr /><br />
+		numToo: <span id = "numtooout"></span>
+	</body>
+</html>
+

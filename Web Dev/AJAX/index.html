@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<!--Mattia Danese-->
+<html>
+	<head>
+		<title></title>
+		<style></style>
+		<script>
+			function initialize()
+			{
+				div = document.getElementById("myDiv");
+				
+				requestGreeting();
+			}
+			function requestGreeting()
+			{
+				var greetingRequest = new XMLHttpRequest();
+				greetingRequest.open("GET", "http://127.0.0.1:8081/greeting", true);
+				greetingRequest.onreadystatechange = function()
+				{
+					if (greetingRequest.readyState == 4) 
+					{
+						myDiv.innerHTML = greetingRequest.responseText;
+					}
+				};
+				greetingRequest.send(null);
+			}
+		</script>
+	</head>
+	<body onload = "initialize();"> 
+		<div id = "myDiv"></div>
+	</body>
+</html>

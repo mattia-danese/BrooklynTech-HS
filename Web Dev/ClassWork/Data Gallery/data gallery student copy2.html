@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Transition Objects</title>
+		<style>
+			body
+			{
+				text-align:center;
+			}
+			
+			.thumb
+			{
+				width:12%;
+			}
+			
+			#mainimg
+			{
+				width:50%;
+			}
+			
+			#caption
+			{
+				font-size:24pt;
+				font-weight:bold;
+			}
+		</style>
+		
+		<script src = "itemdata.js"></script>
+		<script>
+			function initialize()
+			{
+				mainImage = document.getElementById("mainimg");
+				captionOutput = document.getElementById("caption");
+				blurbOutput = document.getElementById("blurb");
+				
+				buildData();
+				setThumbnails();
+				
+				display(0);
+			}
+			
+			function buildData()
+			{
+				names = [];
+				blurbs = [];
+				imageFiles = [];
+				allDragons = [];
+				var fullDragons = items.split(";");
+				for (var i = 0; i < fullDragons.length; i++)
+				{
+					var certainDragon = fullDragons[i].split(":");
+					names.push(certainDragon[0]);
+					blurbs.push(certainDragon[1]);
+					imageFiles.push("images/" + certainDragon[2]);
+				}
+				for (var a = 0; a < names.length; a++)
+				{
+					aDragon = {};
+					aDragon.DragonName = names[a];
+					aDragon.DragonBlurb = blurbs[a];
+					aDragon.DragonImage = imageFiles[a];
+					allDragons.push(aDragon);
+				}
+			}
+			
+			function setThumbnails()
+			{
+				var allImages = document.getElementsByClassName("thumb");
+				for (var i = 0; i < allImages.length; i++)
+				{
+					allImages[i].src = imageFiles[i];
+				}
+			}
+			
+			function display(i)
+			{
+				mainImage.src = allDragons[i].DragonImage;
+				captionOutput.innerHTML = allDragons[i].DragonName;
+				blurbOutput.innerHTML = allDragons[i].DragonBlurb;
+			}
+			
+		</script>
+	</head>
+		
+	<body onload = "initialize();">
+		<img id = "mainimg"  />
+		<div id = "caption"></div>
+		<div id = "blurb"></div>
+		<hr />
+		<img class = "thumb" onclick = "display(0);"/>
+		<img class = "thumb" onclick = "display(1);"/>
+		<img class = "thumb" onclick = "display(2);"/>
+		<img class = "thumb" onclick = "display(3);"/>
+		<img class = "thumb" onclick = "display(4);"/>
+		<img class = "thumb" onclick = "display(5);"/>
+	</body>
+</html>

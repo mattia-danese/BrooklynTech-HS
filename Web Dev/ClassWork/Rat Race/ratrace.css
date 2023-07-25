@@ -1,0 +1,41 @@
+body
+{
+	font:bold 16pt comic sans ms;
+	background-color:lightblue;
+}
+
+button
+{
+	font:36pt comic sans ms;
+	color:white;
+	background-color:darkgreen;
+}
+
+h1, h2, h3
+{
+	text-align:center;
+	font:16pt comic sans ms;
+	height:200px;
+	padding:20px;
+}
+
+h1
+{
+	float:left;
+}
+
+h2
+{
+	float:right;
+}
+
+img
+{
+	height:100%;
+}
+
+p
+{
+	text-align:center;
+	font:bold 36pt comic sans ms;
+}
